@@ -1,20 +1,18 @@
 
 import Link from "next/link";
 import ThemeSwitch from "../utils/ThemeSwitch";
-import { RiMenu4Fill } from "react-icons/ri";
 import InputSearch from "./InputSearch";
+import MobileNavbar from "@/utils/MobileNavbar";
 
 const Navbar = () => {
   return (
     <header className=" flex justify-center py-4 ">
       <div className="flex justify-between items-center lg:w-16/20 md:w-17/20 sm:w-18/20 w-19/20 ">
         <div className="flex items-center">
-          <div className="block lg:hidden mr-2 text-2xl cursor-pointer">
-            <RiMenu4Fill />
-          </div>
+          <MobileNavbar />
           <Link
             href="/"
-            className="md:text-4xl text-4xl text-green-400 font-bold"
+            className="md:text-4xl text-3xl text-green-400 font-bold"
           >
             animelib.
           </Link>

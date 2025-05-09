@@ -4,7 +4,7 @@ import { PiStarFill } from "react-icons/pi";
 
 const SearchAnime = ({ api }) => {
   return (
-    <div className="grid lg:grid-cols-5 md:grid-cols-4 grid-cols-3 sm:gap-8 gap-4">
+    <div className="grid xl:grid-cols-6 lg:grid-cols-5 md:grid-cols-4 grid-cols-3 sm:gap-8 gap-4">
       {api.data.map((anime, index) => {
         return (
           <Link key={index} href={`/anime/${anime.mal_id}`} className="group">
