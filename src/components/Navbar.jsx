@@ -14,7 +14,7 @@ const Navbar = () => {
           </div>
           <Link
             href="/"
-            className="md:text-4xl text-3xl text-green-400 font-bold"
+            className="md:text-4xl text-4xl text-green-400 font-bold"
           >
             animelib.
           </Link>

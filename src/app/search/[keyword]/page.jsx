@@ -1,7 +1,7 @@
 import SearchAnime from "./SearchAnime"
 
 const SearchPage = async ({ params }) => {
-  const keyword = params.keyword
+  const { keyword } = await params
   const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/anime?q=${keyword}`)
   const searchAnime = await response.json()
 

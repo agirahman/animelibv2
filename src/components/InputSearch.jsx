@@ -24,7 +24,7 @@ const InputSearch = () => {
         ref={searchRef}
         required
       />
-      <button className=" p-1 rounded-e-lg border border-s-0 border-gray-500 dark:border-gray-600 text-gray-400 bg-gray-100 dark:bg-gray-800 cursor-pointer" 
+      <button type="button" className=" p-1 rounded-e-lg border border-s-0 border-gray-500 dark:border-gray-600 text-gray-400 bg-gray-100 dark:bg-gray-800 cursor-pointer" 
         onClick={handleSearchInput}>
         <RiSearchLine />
       </button>
