@@ -11,26 +11,21 @@ const HomePage =  async () => {
   const seasonNowAnime = await responseSeasonNow.json()
   const topAnime = await responseTopAnime.json()
 
-  // // fallback data jika api undefined
-  // const safeSeasonUpcomingAnime = seasonUpcomingAnime ?? { data: [] }
-  // const safeSeasonNowAnime = seasonNowAnime ?? { data: [] }
-  // const safeTopAnime = topAnime ?? { data: [] }
-
   return (
     <div className="mt-4">
       <section>
         <TitleList link={"/season-now"} title="Now Airing Anime" />
-        <AnimeList api={safeSeasonNowAnime}/>
+        <AnimeList api={seasonNowAnime}/>
       </section>
 
       <section className="mt-8">
         <TitleList link="/season-upcoming" title="Next Seaon Anime" />
-        <AnimeList api={safeSeasonUpcomingAnime}/>
+        <AnimeList api={seasonUpcomingAnime}/>
       </section>
 
       <section className="mt-8">
         <TitleList link="/top-anime" title="Popular Anime" />
-        <PopularList api={safeTopAnime} />
+        <PopularList api={topAnime} />
       </section>
     </div>
   );
