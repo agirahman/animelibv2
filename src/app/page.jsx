@@ -11,10 +11,10 @@ const HomePage =  async () => {
   const seasonNowAnime = await responseSeasonNow.json()
   const topAnime = await responseTopAnime.json()
 
-  // fallback data jika api undefined
-  const safeSeasonUpcomingAnime = seasonUpcomingAnime ?? { data: [] }
-  const safeSeasonNowAnime = seasonNowAnime ?? { data: [] }
-  const safeTopAnime = topAnime ?? { data: [] }
+  // // fallback data jika api undefined
+  // const safeSeasonUpcomingAnime = seasonUpcomingAnime ?? { data: [] }
+  // const safeSeasonNowAnime = seasonNowAnime ?? { data: [] }
+  // const safeTopAnime = topAnime ?? { data: [] }
 
   return (
     <div className="mt-4">
