@@ -11,7 +11,7 @@ const TopAnime = ({ api }) => {
     <div className="grid xl:grid-cols-6 lg:grid-cols-5 md:grid-cols-4 grid-cols-3 sm:gap-8 gap-4">
       {api.data?.map((anime, index) => {
         return (
-          <Link key={index} href={`/anime/${anime.mal_id}`} className="group">
+          <Link key={index} href={`#`} className="group">
             
             <div className="relative">
               <div className="absolute z-1 top-0 rounded-tl text-black text-sm font-medium rounded-br hover:scale-102 px-1 bg-green-400">
