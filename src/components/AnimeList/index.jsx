@@ -5,7 +5,7 @@ import { FcLike } from "react-icons/fc";
 const AnimeList = ({ api }) => {
   return (
     <div className="grid xl:grid-cols-6 lg:grid-cols-5 md:grid-cols-4 grid-cols-3 sm:gap-8 gap-4">
-      {api?.data.map((anime, index) => (
+      {api?.data?.map((anime, index) => (
         <Link key={index} href={`/anime/${anime.mal_id}`} className="group">
           <Image
             src={anime.images.webp.image_url}
