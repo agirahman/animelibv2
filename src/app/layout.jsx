@@ -1,7 +1,7 @@
-import { Montserrat_Alternates, Quicksand } from "next/font/google";
+import { Quicksand } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
-import { Providers } from "@/utils/providers";
+import { Providers } from "@/components/Theme/providers";
 
 const quicksand = Quicksand({
   subsets: ["latin"],
@@ -10,7 +10,7 @@ const quicksand = Quicksand({
 
 export const metadata = {
   title: "Animelib",
-  description: "Indonesian anime library",
+  description: "Webist Kumpulan Informasi Detail Anime Terbaru Hingga Terlama",
 };
 
 export default function RootLayout({ children }) {

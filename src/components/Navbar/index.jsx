@@ -1,8 +1,8 @@
 
 import Link from "next/link";
-import ThemeSwitch from "../utils/ThemeSwitch";
+import ThemeSwitch from "../Theme/ThemeSwitch";
 import InputSearch from "./InputSearch";
-import MobileNavbar from "@/utils/MobileNavbar";
+import MobileNavbar from "./MobileNavbar";
 
 const Navbar = () => {
   return (

@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { RiMenu4Fill, RiCloseLine } from "react-icons/ri";
-import ThemeSwitch from "./ThemeSwitch";
+import ThemeSwitch from "@/components/Theme/ThemeSwitch";
 
 const MobileNavbar = () => {
   const [isOpen, setIsOpen] = useState(false);

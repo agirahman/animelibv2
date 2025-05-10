@@ -26,7 +26,7 @@ const ThemeSwitch = () => {
   
     if (resolvedTheme === 'dark') {
       return (
-        <button type="button" onClick={() => setTheme('light')} className="p-2 rounded-lg text-gray-300 bg-gray-800 border border-gray-500 cursor-pointer">
+        <button aria-label="light theme button" type="button" onClick={() => setTheme('light')} className="p-2 rounded-lg text-zinc-300 bg-zinc-800 border border-zinc-500 cursor-pointer">
           <FiSun />
         </button>
       )
@@ -34,7 +34,7 @@ const ThemeSwitch = () => {
   
     if (resolvedTheme === 'light') {
       return (
-        <button type="button" onClick={() => setTheme('dark')} className="p-2 rounded-lg text-gray-400 bg-gray-100 border border-gray-500 cursor-pointer">
+        <button aria-label="dark theme button" type="button" onClick={() => setTheme('dark')} className="p-2 rounded-lg text-zinc-400 bg-zinc-100 border border-zinc-500 cursor-pointer">
           <MdDarkMode />
         </button>
       )
