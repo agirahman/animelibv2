@@ -7,7 +7,7 @@ import { PiStarFill } from 'react-icons/pi';
 const PopularList = ({ api }) => {
   return (
     <div className="flex flex-col gap-4">
-      {api.data.map((anime, index) => (
+      {api.data?.map((anime, index) => (
         <Link key={index} href={`/anime/${anime.mal_id}`} className="flex ">
           <>
             <div className="hidden md:flex items-center justify-center w-15">
