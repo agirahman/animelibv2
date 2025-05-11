@@ -15,7 +15,7 @@ const queryUpcoming = `
   `;
 
 const fetchAnilist = async (query) => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_NEW_URL}`, {
+  const res = await fetch(`https://graphql.anilist.co`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
