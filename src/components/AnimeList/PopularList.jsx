@@ -73,7 +73,7 @@ const PopularList = ({ api }) => {
                         <h1>{anime.format}</h1>
                       </div>
                       <div className="flex items-center gap-1">
-                        <h1>{anime.episodes || "?"} Episodes</h1>
+                        <h1>{anime.episodes || "?"} Eps</h1>
                       </div>
                     </div>
                     <div>
