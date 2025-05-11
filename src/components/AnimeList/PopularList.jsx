@@ -45,7 +45,7 @@ const PopularList = ({ api }) => {
                           <div className="text-yellow-400">
                             <PiStarFill />
                           </div>
-                          <span>{anime.averageScore}</span>
+                          <span>{anime.meanScore / 10}</span>
                         </div>
                         <div className="flex items-center gap-1">
                           <FcLike />
@@ -61,7 +61,7 @@ const PopularList = ({ api }) => {
                         <div className="text-yellow-400">
                           <PiStarFill />
                         </div>
-                        <span>{anime.averageScore}</span>
+                        <span>{anime.meanScore / 10}</span>
                       </div>
                       <div className="flex items-center gap-1">
                         <FcLike />

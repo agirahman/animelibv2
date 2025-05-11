@@ -40,9 +40,10 @@ const queryPopular = `
         popularity
         format
         episodes
-        averageScore
+        meanScore
         status
         endDate { year }
+        rankings { id }
       }
     }
   }
