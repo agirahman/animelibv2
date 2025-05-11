@@ -36,7 +36,7 @@ const MobileNavbar = () => {
           ></div>
 
           <nav
-            className="fixed top-0 left-0 h-full w-64 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 z-50 shadow-lg p-6 flex flex-col"
+            className="fixed top-0 left-0 h-full w-64 bg-white dark:bg-black text-gray-900 dark:text-gray-100 z-50 shadow-lg p-6 flex flex-col"
             aria-label="Mobile sidebar"
           >
             <div className="flex justify-between items-center mb-6">
@@ -54,7 +54,7 @@ const MobileNavbar = () => {
               <Link
                 href="/"
                 onClick={toggleSidebar}
-                className="hover:text-green-400 transition-colors p-2 rounded-lg dark:text-gray-300 dark:bg-gray-800 border border-gray-500 text-gray-400 bg-gray-100"
+                className="hover:text-green-400 hover:bg-zinc-700 transition-colors p-2 rounded-lg dark:text-gray-300 dark:bg-zinc-800 border border-gray-500 text-gray-400 bg-gray-100"
               >
                 Home
               </Link>
@@ -62,7 +62,7 @@ const MobileNavbar = () => {
               <Link
                 href="/about"
                 onClick={toggleSidebar}
-                className="hover:text-green-400 transition-colors p-2 rounded-lg dark:text-gray-300 dark:bg-gray-800 border border-gray-500 text-gray-400 bg-gray-100"
+                className="hover:text-green-400 hover:bg-zinc-700  transition-colors p-2 rounded-lg dark:text-gray-300 dark:bg-zinc-800 border border-gray-500 text-gray-400 bg-gray-100"
               >
                 About
               </Link>
@@ -70,7 +70,7 @@ const MobileNavbar = () => {
               <Link
                 href="/contact"
                 onClick={toggleSidebar}
-                className="hover:text-green-400 transition-colors p-2 rounded-lg dark:text-gray-300 dark:bg-gray-800 border border-gray-500 text-gray-400 bg-gray-100"
+                className="hover:text-green-400 hover:bg-zinc-700  transition-colors p-2 rounded-lg dark:text-gray-300 dark:bg-zinc-800 border border-gray-500 text-gray-400 bg-gray-100"
               >
                 Contact
               </Link>

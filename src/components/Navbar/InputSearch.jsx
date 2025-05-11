@@ -35,7 +35,7 @@ const InputSearch = () => {
         onKeyDown={handleValidationInput}
         required
       />
-      <button aria-label="seacrh button" type="button" className=" p-1 rounded-e-lg border border-s-0 border-zinc-500 dark:border-zinc-600 text-zinc-400 bg-zinc-100 dark:bg-zinc-800 cursor-pointer" 
+      <button aria-label="seacrh button" type="button" className=" p-1 rounded-e-lg border border-s-0 border-zinc-500 text-zinc-400 bg-zinc-100 dark:bg-zinc-800 cursor-pointer" 
         onClick={handleValidationInput}>
         <RiSearchLine />
       </button>

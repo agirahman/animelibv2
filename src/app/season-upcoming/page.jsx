@@ -1,14 +1,39 @@
 import SeasonUpcomingAnime from "./SeasonUpcomingAnime"
 
-const page = async () => {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/seasons/upcoming`)
-    const data = await response.json()
+const queryUpcoming = `
+    query {
+      Page(perPage:50) {
+        media(type: ANIME, status: NOT_YET_RELEASED, sort: POPULARITY_DESC) {
+          id
+          title { romaji english }
+          coverImage { large }
+          popularity
+          format
+        }
+      }
+    }
+  `;
 
+const fetchAnilist = async (query) => {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_NEW_URL}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ query }),
+    next: { revalidate: 3600 },
+  });
+  const { data } = await res.json();
+  return data?.Page?.media || [];
+};
+
+const page = async () => {
+const seasonUpcoming = await fetchAnilist(queryUpcoming)
   return (
     <>
-    <SeasonUpcomingAnime api={data} />
+    <SeasonUpcomingAnime api={seasonUpcoming} />
     </>
   )
 }
 
-export default page
+export default page 
