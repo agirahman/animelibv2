@@ -1,6 +1,5 @@
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
 import { FcLike } from "react-icons/fc";
 import { PiStarFill } from "react-icons/pi";
 
@@ -8,13 +7,13 @@ const PopularList = ({ api }) => {
   return (
     <div className="flex flex-col gap-4">
       {api.map((anime, index) => (
-        <Link key={anime.id} href={`#`} className="flex">
+        <Link key={anime.id} href={`/anime/${anime.id}`} className="flex">
           <>
             <div className="hidden md:flex items-center justify-center w-15">
               <h1 className="text-3xl text-zinc-500 font-bold">#{index + 1}</h1>
             </div>
 
-            <div className="relative md:flex w-full max-h-29 bg-zinc-100 dark:bg-zinc-800 p-2 gap-1 rounded-md hover:shadow-lg dark:hover:bg-zinc-700 transition-all">
+            <div className="w-full relative md:flex max-h-29 bg-zinc-100 dark:bg-zinc-800 p-2 gap-1 rounded-md hover:shadow-lg dark:hover:bg-zinc-700 transition-all">
               <div className="absolute md:hidden top-0 start-0">
                 <h1 className="text-sm text-black font-medium rounded-full bg-green-400 p-1">
                   #{index + 1}
@@ -78,10 +77,10 @@ const PopularList = ({ api }) => {
                     </div>
                     <div>
                       <div>
-                        <h1>{anime.status}</h1>
+                        <h1>{anime.season}</h1>
                       </div>
                       <div>
-                        <h1>{anime.endDate?.year || "Unknown"}</h1>
+                        <h1>{anime.startDate?.year || "Unknown"}</h1>
                       </div>
                     </div>
                   </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { RiMenu4Fill, RiCloseLine } from "react-icons/ri";
 import ThemeSwitch from "@/components/Theme/ThemeSwitch";

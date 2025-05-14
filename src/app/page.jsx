@@ -1,6 +1,7 @@
 import AnimeList from "@/components/AnimeList";
 import PopularList from "@/components/AnimeList/PopularList";
 import TitleList from "@/components/AnimeList/TitleList";
+import { fetchData } from "@/utils/services/api";
 
 const queryNow = `
     query {
@@ -8,7 +9,7 @@ const queryNow = `
         media(type: ANIME, status: RELEASING, sort: POPULARITY_DESC) {
           id
           title { romaji english }
-          coverImage { large }
+          coverImage { large, color }
           popularity
           format
         }
@@ -22,7 +23,7 @@ const queryUpcoming = `
         media(type: ANIME, status: NOT_YET_RELEASED, sort: POPULARITY_DESC) {
           id
           title { romaji english }
-          coverImage { large }
+          coverImage { large, color }
           popularity
           format
         }
@@ -41,39 +42,21 @@ const queryPopular = `
         format
         episodes
         meanScore
-        status
-        endDate { year }
-        rankings { id }
+        season
+        startDate {
+          year
+        }
       }
     }
   }
 `;
 
-const fetchAnilist = async (query) => {
-  const res = await fetch(`https://graphql.anilist.co`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ query }),
-    next: { revalidate: 3600 },
-  });
-  const { data } = await res.json();
-  return data?.Page?.media || [];
-};
 
 const HomePage = async () => {
-  // const responseSeasonUpcoming = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/seasons/upcoming?limit=6`)
-  // const responseSeasonNow = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/seasons/now?limit=6`)
-  // const responseTopAnime = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/top/anime?limit=10`)
 
-  // const seasonUpcomingAnime = await responseSeasonUpcoming.json()
-  // const seasonNowAnime = await responseSeasonNow.json()
-  // const topAnime = await responseTopAnime.json()
-
-  const seasonNowAnime = await fetchAnilist(queryNow);
-  const seasonUpcomingAnime = await fetchAnilist(queryUpcoming);
-  const topAnime = await fetchAnilist(queryPopular);
+  const seasonNowAnime = await fetchData(queryNow);
+  const seasonUpcomingAnime = await fetchData(queryUpcoming);
+  const topAnime = await fetchData(queryPopular);
 
   return (
     <div className="mt-4">
