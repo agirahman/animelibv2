@@ -24,10 +24,11 @@ const page = async () => {
       <Header title="Top Anime" />
       <div className="grid xl:grid-cols-6 lg:grid-cols-5 md:grid-cols-4 grid-cols-3 sm:gap-8 gap-4">
         {api.length > 0 ? (
-          api.map((anime) => (
+          api.map((anime, index) => (
             <AnimeCard
               key={anime.id}
               anime={anime}
+              index={index}
               icon={<PiStarFill className="text-yellow-400" />}
             />
           ))

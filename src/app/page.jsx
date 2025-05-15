@@ -36,7 +36,7 @@ const queryPopular = `
       media(type: ANIME, sort: SCORE_DESC) {
         id
         title { romaji english }
-        coverImage { large }
+        coverImage { large, color }
         genres
         popularity
         format

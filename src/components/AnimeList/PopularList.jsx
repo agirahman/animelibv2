@@ -15,7 +15,7 @@ const PopularList = ({ api }) => {
 
             <div className="w-full relative md:flex max-h-29 bg-zinc-100 dark:bg-zinc-800 p-2 gap-1 rounded-md hover:shadow-lg dark:hover:bg-zinc-700 transition-all">
               <div className="absolute md:hidden top-0 start-0">
-                <h1 className="text-sm text-black font-medium rounded-full bg-green-400 p-1">
+                <h1 className="text-sm text-black font-semibold rounded-full p-1" style={{backgroundColor: anime.coverImage.color || "#22c55e"}}>
                   #{index + 1}
                 </h1>
               </div>

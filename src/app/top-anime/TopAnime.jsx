@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 
-const AnimeCard = ({ anime, icon, index }) => {
+const TopAnime = () => {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
@@ -14,16 +14,15 @@ const AnimeCard = ({ anime, icon, index }) => {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {typeof index !== "undefined" && (
-        <div className="absolute top-0 start-0 z-10">
+      <div className="absolute md:hidden top-0 start-0 z-10">
         <h1
-          className="text-sm text-black font-semibold rounded-tl rounded-br p-1"
+          className="text-sm text-black font-medium rounded-full p-1"
           style={{ backgroundColor: anime.coverImage.color || "#22c55e" }}
         >
-          #{index + 1}
+          #{}
         </h1>
       </div>
-      )}
+      ;
       <Image
         src={anime.coverImage.large}
         alt="anime cover"
@@ -32,7 +31,6 @@ const AnimeCard = ({ anime, icon, index }) => {
         priority
         className="rounded group-hover:scale-102 transition-all  w-full max-h-72 aspect-[11/16] object-cover group-hover:shadow-lg"
       />
-
       <h1
         className="font-medium sm:text-md md:text-md text-sm mt-1 transition-all line-clamp-2 min-h-[2.7rem]"
         style={{
@@ -41,7 +39,6 @@ const AnimeCard = ({ anime, icon, index }) => {
       >
         {anime.title.romaji || anime.title.english}
       </h1>
-
       <div className="flex text-sm items-center justify-between">
         <div className="flex items-center gap-1">
           {icon}
@@ -55,4 +52,4 @@ const AnimeCard = ({ anime, icon, index }) => {
   );
 };
 
-export default AnimeCard;
+export default TopAnime;
