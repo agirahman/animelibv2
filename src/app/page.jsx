@@ -1,7 +1,9 @@
 import AnimeList from "@/components/AnimeList";
 import PopularList from "@/components/AnimeList/PopularList";
 import TitleList from "@/components/AnimeList/TitleList";
+import AnimeRecommendationsSlider from "@/components/RecommendationAnime/RecommendationAnime";
 import { fetchData } from "@/utils/services/api";
+import { RiH1 } from "react-icons/ri";
 
 const queryNow = `
     query {
@@ -51,15 +53,37 @@ const queryPopular = `
   }
 `;
 
+const queryRandomAnime = `
+  query {
+  Page(perPage: 50) {
+    recommendations {
+      mediaRecommendation {
+        id
+        title {
+          romaji
+        }
+        coverImage {
+          large
+        }
+      }
+    }
+  }
+}
+`;
 
 const HomePage = async () => {
-
   const seasonNowAnime = await fetchData(queryNow);
   const seasonUpcomingAnime = await fetchData(queryUpcoming);
   const topAnime = await fetchData(queryPopular);
+  const recommendationAnime = await fetchData(queryRandomAnime)
+  console.log({recommendationAnime})
 
   return (
     <div className="mt-4">
+      {/* <section>
+        <AnimeRecommendationsSlider />
+      </section> */}
+
       <section>
         <TitleList link="/season-now" title="Now Airing Anime" />
         <AnimeList api={seasonNowAnime} />

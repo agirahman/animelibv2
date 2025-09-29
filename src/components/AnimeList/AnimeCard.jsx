@@ -30,7 +30,7 @@ const AnimeCard = ({ anime, icon, index }) => {
         width={350}
         height={250}
         priority
-        className="rounded group-hover:scale-102 transition-all  w-full max-h-72 aspect-[11/16] object-cover group-hover:shadow-lg"
+        className="rounded group-hover:scale-102 transition-all  w-full max-h-96 aspect-[11/16] object-cover group-hover:shadow-lg"
       />
 
       <h1

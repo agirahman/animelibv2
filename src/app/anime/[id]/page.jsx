@@ -54,7 +54,8 @@ const getAnimeById = async (id) => {
 };
 
 const page = async ({ params }) => {
-  const anime = await getAnimeById(params.id);
+  // const {id} = await params
+  const anime = await getAnimeById((await params).id)
 
   return (
     <DetailAnime anime={anime} />

@@ -13,7 +13,7 @@ const DetailAnime = ({ anime }) => {
           className="object-cover"
           priority
         />
-        <div className="absolute bottom-0 left-0 w-full h-24 bg-gradient-to-t from-black to-transparent z-10" />
+        <div className="absolute bottom-0 left-0 w-full h-24 bg-gradient-to-t dark:from-zinc-900 from-white to-transparent z-10" />
       </div>
 
       {/* Content */}
