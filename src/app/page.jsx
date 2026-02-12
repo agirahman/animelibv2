@@ -34,7 +34,7 @@ const queryUpcoming = `
   `;
 const queryPopular = `
   query {
-    Page(perPage: 10) {
+    Page(perPage: 24) {
       media(type: ANIME, sort: SCORE_DESC) {
         id
         title { romaji english }
@@ -76,28 +76,34 @@ const HomePage = async () => {
   const seasonUpcomingAnime = await fetchData(queryUpcoming);
   const topAnime = await fetchData(queryPopular);
   const recommendationAnime = await fetchData(queryRandomAnime)
-  console.log({recommendationAnime})
+  // console.log({recommendationAnime})
 
   return (
-    <div className="mt-4">
-      {/* <section>
+    <div className="min-h-screen pb-12">
+      {/* Hero Section */}
+      <section className="mt-4 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <AnimeRecommendationsSlider />
-      </section> */}
-
-      <section>
-        <TitleList link="/season-now" title="Now Airing Anime" />
-        <AnimeList api={seasonNowAnime} />
       </section>
 
-      <section className="mt-8">
-        <TitleList link="/season-upcoming" title="Next Season Anime" />
-        <AnimeList api={seasonUpcomingAnime} />
-      </section>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col gap-12 mt-12">
+        {/* Now Airing Section */}
+        <section>
+          <TitleList link="/season-now" title="Now Airing Anime" />
+          <AnimeList api={seasonNowAnime} />
+        </section>
 
-      <section className="mt-8">
-        <TitleList link="/top-anime" title="Top Anime" />
-        <PopularList api={topAnime} />
-      </section>
+        {/* Upcoming Section */}
+        <section>
+          <TitleList link="/season-upcoming" title="Next Season Anime" />
+          <AnimeList api={seasonUpcomingAnime} />
+        </section>
+
+        {/* Top Anime Section */}
+        <section>
+          <TitleList link="/top-anime" title="Top Anime" />
+          <PopularList api={topAnime} />
+        </section>
+      </div>
     </div>
   );
 };

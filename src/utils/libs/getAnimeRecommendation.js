@@ -12,6 +12,7 @@ export const getAnimeRecommendations = async () => {
             }
             coverImage {
               color
+              large
             }
               bannerImage
           }

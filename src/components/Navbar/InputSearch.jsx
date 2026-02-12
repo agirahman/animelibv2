@@ -26,18 +26,22 @@ const InputSearch = () => {
   }
 
   return (
-    <div className="flex item-center sm:w-50 w-40">
+    <div className="relative flex items-center w-full max-w-[200px] sm:max-w-[250px] group">
       <input
         type="search"
-        className="block px-2 py-1 w-full text-md text-black bg-zinc-100 rounded-s-lg border border-zinc-500 border-e-0 focus:border-blue-500 dark:bg-zinc-800 dark:border-zinc-500 dark:placeholder-zinc-400 dark:text-white dark:focus:border-blue-400 "
-        placeholder="Search..."
+        className="block w-full px-4 py-2 pr-10 text-sm md:text-base text-gray-900 bg-gray-100 rounded-full border border-transparent focus:border-green-500 focus:bg-white focus:ring-2 focus:ring-green-200 dark:bg-zinc-800 dark:text-white dark:focus:bg-zinc-800 dark:focus:border-green-400 dark:focus:ring-green-900 transition-all duration-300 outline-none shadow-sm group-hover:shadow-md"
+        placeholder="Search anime..."
         ref={searchRef}
         onKeyDown={handleValidationInput}
         required
       />
-      <button aria-label="seacrh button" type="button" className=" p-1 rounded-e-lg border border-s-0 border-zinc-500 text-zinc-400 bg-zinc-100 dark:bg-zinc-800 cursor-pointer" 
-        onClick={handleValidationInput}>
-        <RiSearchLine />
+      <button
+        aria-label="search button"
+        type="button"
+        className="absolute right-1 p-1.5 text-gray-500 hover:text-green-500 dark:text-gray-400 dark:hover:text-green-400 transition-colors rounded-full"
+        onClick={handleValidationInput}
+      >
+        <RiSearchLine size={20} />
       </button>
     </div>
   );

@@ -18,9 +18,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${quicksand.className} antialiased `}>
-        <ThemeProvider attribute="class"  defaultTheme="system" enableSystem>
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
           <Navbar />
-          <main className="min-h-screen flex justify-center ">
+          <main className="min-h-screen flex justify-center pt-24">
             <div className="lg:w-16/20 md:w-17/20 sm:w-18/20 w-19/20">{children}</div>
           </main>
         </ThemeProvider>

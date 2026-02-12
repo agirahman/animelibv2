@@ -1,11 +1,14 @@
 import { getAnimeRecommendations } from "@/utils/libs/getAnimeRecommendation";
-import Image from "next/image";
-import Link from "next/link";
-
+import HeroSlider from "./HeroSlider";
 
 const RecommendationAnime = async () => {
-      const recommendations = await getAnimeRecommendations();
-    return {
-// {recommendations.map((anime) =>)}
-    }
-}
+    const recommendations = await getAnimeRecommendations();
+
+    return (
+        <section>
+            <HeroSlider recommendations={recommendations} />
+        </section>
+    );
+};
+
+export default RecommendationAnime;

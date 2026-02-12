@@ -10,46 +10,66 @@ const AnimeCard = ({ anime, icon, index }) => {
   return (
     <Link
       href={`/anime/${anime.id}`}
-      className="group relative"
+      className="group relative block overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-all duration-300"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
+      {/* Rank Badge */}
       {typeof index !== "undefined" && (
-        <div className="absolute top-0 start-0 z-10">
-        <h1
-          className="text-sm text-black font-semibold rounded-tl rounded-br p-1"
-          style={{ backgroundColor: anime.coverImage.color || "#22c55e" }}
-        >
-          #{index + 1}
-        </h1>
-      </div>
+        <div className="absolute top-0 left-0 z-20">
+          <div
+            className="flex items-center justify-center w-8 h-8 rounded-br-lg font-bold text-white shadow-md text-sm"
+            style={{ backgroundColor: anime.coverImage.color || "#22c55e" }}
+          >
+            #{index + 1}
+          </div>
+        </div>
       )}
-      <Image
-        src={anime.coverImage.large}
-        alt="anime cover"
-        width={350}
-        height={250}
-        priority
-        className="rounded group-hover:scale-102 transition-all  w-full max-h-96 aspect-[11/16] object-cover group-hover:shadow-lg"
-      />
 
-      <h1
-        className="font-medium sm:text-md md:text-md text-sm mt-1 transition-all line-clamp-2 min-h-[2.7rem]"
-        style={{
-          color: isHovered ? anime.coverImage.color || "#22c55e" : "inherit",
-        }}
-      >
-        {anime.title.romaji || anime.title.english}
-      </h1>
+      {/* Image Container */}
+      <div className="relative w-full aspect-[2/3] overflow-hidden">
+        <Image
+          src={anime.coverImage.large}
+          alt={anime.title.romaji || "Anime Cover"}
+          fill
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          className="object-cover transition-transform duration-500 group-hover:scale-110"
+          priority={false}
+        />
 
-      <div className="flex text-sm items-center justify-between">
-        <div className="flex items-center gap-1">
-          {icon}
-          <span className="text-gray-500">
-            {anime.popularity || anime.meanScore / 10}
+        {/* Hover Overlay Gradient */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+        {/* Play Icon on Hover */}
+        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-4 group-hover:translate-y-0">
+          <div className="bg-white/20 backdrop-blur-sm p-3 rounded-full text-white">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-8 h-8">
+              <path fillRule="evenodd" d="M4.5 5.653c0-1.426 1.529-2.33 2.779-1.643l11.54 6.348c1.295.712 1.295 2.573 0 3.285L7.28 19.991c-1.25.687-2.779-.217-2.779-1.643V5.653z" clipRule="evenodd" />
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      {/* Content */}
+      <div className="absolute bottom-0 left-0 w-full p-3 bg-gradient-to-t from-black/90 to-transparent pt-8">
+        <h3
+          className="font-bold text-sm md:text-base line-clamp-2 leading-tight transition-colors"
+          style={{
+            color: isHovered ? anime.coverImage.color || "#22c55e" : "#ffffff",
+          }}
+        >
+          {anime.title.romaji || anime.title.english}
+        </h3>
+
+        <div className="flex items-center justify-between mt-1 text-xs text-gray-300">
+          <div className="flex items-center gap-1">
+            {icon}
+            <span>{anime.popularity || anime.meanScore / 10}</span>
+          </div>
+          <span className="bg-white/20 px-1.5 py-0.5 rounded text-[10px] backdrop-blur-sm">
+            {anime.format}
           </span>
         </div>
-        <span className="text-gray-500">{anime.format}</span>
       </div>
     </Link>
   );
