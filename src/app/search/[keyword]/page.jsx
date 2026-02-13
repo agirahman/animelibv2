@@ -42,38 +42,58 @@ const SearchPage = async ({ params }) => {
   const decodeKeyword = decodeURIComponent(keyword);
 
   return (
-    <div className="py-8 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 min-h-[60vh]">
-      <div className="mb-8 text-center md:text-left border-b border-zinc-200 dark:border-zinc-800 pb-4">
-        <h1 className="text-3xl md:text-4xl font-bold mb-2 break-words">
-          Search Results for <span className="text-green-500 italic">"{decodeKeyword}"</span>
-        </h1>
-        <p className="text-zinc-500 dark:text-zinc-400 font-medium">
-          Found {api.length} results matching your query.
-        </p>
+    <div className="min-h-screen pb-12">
+      {/* Search Header */}
+      <div className="relative mb-12 mt-6 overflow-hidden rounded-2xl bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 p-8 md:p-12 shadow-sm max-w-7xl mx-auto">
+        <div className="absolute top-0 right-0 -m-8 w-64 h-64 bg-green-500/10 rounded-full blur-3xl animate-pulse" />
+        <div className="absolute bottom-0 left-0 -m-8 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl animate-pulse" />
+
+        <div className="relative z-10 flex flex-col items-center md:items-start">
+          <div className="flex items-center gap-3 mb-4">
+            <span className="px-3 py-1 bg-green-500/10 text-green-600 dark:text-green-500 text-xs font-bold rounded-full uppercase tracking-wider">
+              Search Results
+            </span>
+          </div>
+
+          <h1 className="text-3xl md:text-5xl font-extrabold mb-4 tracking-tight text-zinc-900 dark:text-white leading-tight">
+            Results for <span className="text-green-500 italic">"{decodeKeyword}"</span>
+          </h1>
+          <p className="text-zinc-600 dark:text-zinc-400 text-lg md:text-xl max-w-2xl leading-relaxed">
+            Found <span className="font-bold text-zinc-900 dark:text-white">{api.length}</span> titles matching your research. Ready to dive into something new?
+          </p>
+        </div>
       </div>
 
-      {api.length > 0 ? (
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-6">
-          {api.map((anime, index) => (
-            <AnimeCard
-              key={anime.id}
-              anime={anime}
-              icon={<PiStarFill className="text-yellow-500" />}
-            />
-          ))}
-        </div>
-      ) : (
-        <div className="flex flex-col items-center justify-center py-20 text-center bg-zinc-50 dark:bg-zinc-900/50 rounded-xl border border-dashed border-zinc-300 dark:border-zinc-700">
-          <PiSmileySad size={80} className="text-zinc-300 dark:text-zinc-600 mb-6" />
-          <h2 className="text-2xl font-bold text-zinc-700 dark:text-zinc-300 mb-2">No results found</h2>
-          <p className="text-zinc-500 max-w-md mb-8">
-            We couldn't find any anime matching "{decodeKeyword}". Try checking your spelling or use different keywords.
-          </p>
-          <Link href="/" className="px-8 py-3 bg-green-500 hover:bg-green-600 text-white rounded-full font-bold transition-all hover:scale-105 shadow-lg shadow-green-500/20">
-            Back to Home
-          </Link>
-        </div>
-      )}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {api.length > 0 ? (
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 md:gap-8">
+            {api.map((anime, index) => (
+              <AnimeCard
+                key={anime.id}
+                anime={anime}
+                index={index}
+                icon={<PiStarFill className="text-yellow-500" />}
+              />
+            ))}
+          </div>
+        ) : (
+          <div className="flex flex-col items-center justify-center py-24 text-center bg-zinc-50 dark:bg-zinc-900/50 rounded-2xl border-2 border-dashed border-zinc-200 dark:border-zinc-800">
+            <div className="p-8 bg-zinc-200 dark:bg-zinc-800 rounded-full mb-6">
+              <PiSmileySad size={64} className="text-zinc-400 dark:text-zinc-500" />
+            </div>
+            <h2 className="text-3xl font-bold text-zinc-800 dark:text-zinc-200 mb-3">No results found</h2>
+            <p className="text-zinc-500 dark:text-zinc-400 max-w-md mb-10 text-lg">
+              We couldn't find any anime matching "{decodeKeyword}". Maybe try another masterpiece?
+            </p>
+            <Link
+              href="/"
+              className="px-10 py-4 bg-green-500 hover:bg-green-600 text-white rounded-full font-bold transition-all hover:scale-105 shadow-xl shadow-green-500/30 flex items-center gap-2"
+            >
+              Back to Discover
+            </Link>
+          </div>
+        )}
+      </div>
     </div>
   );
 };

@@ -2,15 +2,24 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { RiMenu4Fill, RiCloseLine } from "react-icons/ri";
 import ThemeSwitch from "@/components/Theme/ThemeSwitch";
 
 const MobileNavbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const pathname = usePathname();
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
   };
+
+  const menuItems = [
+    { name: "Home", path: "/" },
+    { name: "Ongoing Anime", path: "/ongoing" },
+    { name: "Upcoming Anime", path: "/upcoming" },
+    { name: "Popular Anime", path: "/popular" },
+  ];
 
   return (
     <>
@@ -56,22 +65,23 @@ const MobileNavbar = () => {
 
           {/* Links */}
           <ul className="flex flex-col p-4 w-full gap-2 bg-white dark:bg-zinc-900">
-            {[
-              { name: "Home", path: "/" },
-              { name: "Ongoing Anime", path: "/season-now" },
-              { name: "Upcoming Anime", path: "/season-upcoming" },
-              { name: "Popular Anime", path: "/top-anime" },
-            ].map((link) => (
-              <li key={link.name}>
-                <Link
-                  href={link.path}
-                  onClick={toggleSidebar}
-                  className="flex items-center w-full p-3 rounded-lg text-lg font-medium text-gray-700 dark:text-gray-200 hover:bg-green-50 dark:hover:bg-zinc-800 hover:text-green-600 dark:hover:text-green-400 transition-all border border-transparent hover:border-green-100 dark:hover:border-zinc-700"
-                >
-                  {link.name}
-                </Link>
-              </li>
-            ))}
+            {menuItems.map((link) => {
+              const isActive = pathname === link.path;
+              return (
+                <li key={link.name}>
+                  <Link
+                    href={link.path}
+                    onClick={toggleSidebar}
+                    className={`flex items-center w-full p-3 rounded-lg text-lg font-medium transition-all border ${isActive
+                      ? "bg-green-500/10 text-green-500 border-green-500/20 shadow-sm"
+                      : "text-gray-700 dark:text-gray-200 hover:bg-green-50 dark:hover:bg-zinc-800 hover:text-green-600 dark:hover:text-green-400 border-transparent hover:border-green-100 dark:hover:border-zinc-700"
+                      }`}
+                  >
+                    {link.name}
+                  </Link>
+                </li>
+              );
+            })}
           </ul>
 
           {/* Footer / Extra Actions */}

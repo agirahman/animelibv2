@@ -1,9 +1,9 @@
 import AnimeList from "@/components/AnimeList";
 import PopularList from "@/components/AnimeList/PopularList";
 import TitleList from "@/components/AnimeList/TitleList";
+import TopAnimeList from "@/components/AnimeList/TopAnimeList";
 import AnimeRecommendationsSlider from "@/components/RecommendationAnime/RecommendationAnime";
 import { fetchData } from "@/utils/services/api";
-import { RiH1 } from "react-icons/ri";
 
 const queryNow = `
     query {
@@ -34,7 +34,7 @@ const queryUpcoming = `
   `;
 const queryPopular = `
   query {
-    Page(perPage: 24) {
+    Page(perPage: 10) {
       media(type: ANIME, sort: SCORE_DESC) {
         id
         title { romaji english }
@@ -72,36 +72,41 @@ const queryRandomAnime = `
 `;
 
 const HomePage = async () => {
-  const seasonNowAnime = await fetchData(queryNow);
-  const seasonUpcomingAnime = await fetchData(queryUpcoming);
-  const topAnime = await fetchData(queryPopular);
-  const recommendationAnime = await fetchData(queryRandomAnime)
-  // console.log({recommendationAnime})
+  const [seasonNowAnime, seasonUpcomingAnime, topAnime] = await Promise.all([
+    fetchData(queryNow),
+    fetchData(queryUpcoming),
+    fetchData(queryPopular)
+  ]);
 
   return (
-    <div className="min-h-screen pb-12">
+    <div className="min-h-screen pb-12 overflow-x-hidden">
       {/* Hero Section */}
       <section className="mt-4 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <AnimeRecommendationsSlider />
       </section>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col gap-12 mt-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col gap-16 mt-16">
         {/* Now Airing Section */}
         <section>
-          <TitleList link="/season-now" title="Now Airing Anime" />
+          <TitleList link="/ongoing" title="Ongoing Highlights" />
           <AnimeList api={seasonNowAnime} />
         </section>
 
         {/* Upcoming Section */}
         <section>
-          <TitleList link="/season-upcoming" title="Next Season Anime" />
+          <TitleList link="/upcoming" title="Upcoming Anticipated" />
           <AnimeList api={seasonUpcomingAnime} />
         </section>
 
         {/* Top Anime Section */}
         <section>
-          <TitleList link="/top-anime" title="Top Anime" />
-          <PopularList api={topAnime} />
+          <div className="mb-8">
+            <TitleList link="/popular" title="Most Popular Rankings" />
+            <p className="text-zinc-500 dark:text-zinc-400 mt-2 text-sm md:text-base max-w-2xl">
+              Curated list of the highest rated anime masterpieces of all time. Explore the legends.
+            </p>
+          </div>
+          <TopAnimeList api={topAnime} />
         </section>
       </div>
     </div>

@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { AiFillLike } from "react-icons/ai";
 import { PiStarFill } from "react-icons/pi";
 
 const DetailAnime = ({ anime }) => {
@@ -98,11 +99,11 @@ const DetailAnime = ({ anime }) => {
                           alt="avatar"
                           className="w-10 h-10 rounded-full object-cover border border-zinc-300 dark:border-zinc-700"
                         />
-                        <div>
+                        <div className="flex justify-between w-full">
                           <p className="font-bold text-sm text-zinc-900 dark:text-white">{review.user.name}</p>
-                          <div className="flex items-center gap-1 text-xs text-yellow-500">
-                            <PiStarFill />
-                            <span>{review.rating / 10}/10</span>
+                          <div className="flex items-center gap-1 text-xs text-gray-500">
+                            <AiFillLike />
+                            <span>{review.rating}</span>
                           </div>
                         </div>
                       </div>

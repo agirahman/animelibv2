@@ -1,10 +1,22 @@
 
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import ThemeSwitch from "../Theme/ThemeSwitch";
 import InputSearch from "./InputSearch";
 import MobileNavbar from "./MobileNavbar";
 
 const Navbar = () => {
+  const pathname = usePathname();
+
+  const navLinks = [
+    { name: "Home", href: "/" },
+    { name: "Ongoing", href: "/ongoing" },
+    { name: "Upcoming", href: "/upcoming" },
+    { name: "Popular", href: "/popular" },
+  ];
+
   return (
     <header className="fixed top-0 left-0 w-full z-50 bg-white/80 dark:bg-black/80 backdrop-blur-md shadow-sm transition-all duration-300">
       <div className="flex justify-between items-center max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
@@ -20,18 +32,18 @@ const Navbar = () => {
 
         <div className="flex items-center gap-6">
           <nav className="hidden lg:flex items-center gap-6 font-medium text-gray-700 dark:text-gray-200">
-            <Link href="/" className="hover:text-green-500 hover:underline underline-offset-4 transition-all">
-              Home
-            </Link>
-            <Link href="/season-now" className="hover:text-green-500 hover:underline underline-offset-4 transition-all">
-              Ongoing
-            </Link>
-            <Link href="/season-upcoming" className="hover:text-green-500 hover:underline underline-offset-4 transition-all">
-              Upcoming
-            </Link>
-            <Link href="/top-anime" className="hover:text-green-500 hover:underline underline-offset-4 transition-all">
-              Popular
-            </Link>
+            {navLinks.map((link) => {
+              const isActive = pathname === link.href;
+              return (
+                <Link
+                  key={link.name}
+                  href={link.href}
+                  className={`transition-all hover:text-green-500 hover:underline underline-offset-4 ${isActive ? "text-green-500 underline" : ""}`}
+                >
+                  {link.name}
+                </Link>
+              );
+            })}
           </nav>
 
           <div className="flex items-center gap-3">
