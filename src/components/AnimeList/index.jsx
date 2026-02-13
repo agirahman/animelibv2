@@ -1,11 +1,18 @@
 import { FcLike } from "react-icons/fc";
 import AnimeCard from "./AnimeCard";
 
-const AnimeList = ({ api }) => {
+const AnimeList = ({ api, priority = false }) => {
   return (
     <div className="grid xl:grid-cols-6 lg:grid-cols-5 md:grid-cols-4 grid-cols-3 sm:gap-8 gap-2">
       {api?.length > 0 ? (
-        api.map((anime) => <AnimeCard key={anime.id} anime={anime} icon={<FcLike />}/>)
+        api.map((anime, index) => (
+          <AnimeCard
+            key={anime.id}
+            anime={anime}
+            icon={<FcLike />}
+            priority={priority && index < 3}
+          />
+        ))
       ) : (
         <p>Tidak ada data untuk ditampilkan.</p>
       )}

@@ -81,15 +81,15 @@ const HomePage = async () => {
   return (
     <div className="min-h-screen pb-12 overflow-x-hidden">
       {/* Hero Section */}
-      <section className="mt-4 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className=" max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <AnimeRecommendationsSlider />
       </section>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col gap-16 mt-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col gap-8 mt-8">
         {/* Now Airing Section */}
         <section>
           <TitleList link="/ongoing" title="Ongoing Highlights" />
-          <AnimeList api={seasonNowAnime} />
+          <AnimeList api={seasonNowAnime} priority={true} />
         </section>
 
         {/* Upcoming Section */}

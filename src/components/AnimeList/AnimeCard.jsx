@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 
-const AnimeCard = ({ anime, icon, index }) => {
+const AnimeCard = ({ anime, icon, index, priority = false }) => {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
@@ -32,9 +32,9 @@ const AnimeCard = ({ anime, icon, index }) => {
           src={anime.coverImage.large}
           alt={anime.title.romaji || "Anime Cover"}
           fill
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          sizes="(max-width: 640px) 33vw, (max-width: 768px) 25vw, (max-width: 1024px) 20vw, 15vw"
           className="object-cover transition-transform duration-500 group-hover:scale-110"
-          priority={false}
+          priority={priority}
         />
 
         {/* Hover Overlay Gradient */}
