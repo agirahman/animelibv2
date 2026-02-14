@@ -10,7 +10,7 @@ const page = async () => {
 
   return (
     <div className="min-h-screen pb-12">
-      <div className="relative mb-12 mt-6 overflow-hidden rounded-2xl bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 p-8 md:p-12 shadow-sm">
+      <div className="relative mb-6 overflow-hidden rounded-2xl bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 p-8 md:p-12 shadow-sm">
         <div className="absolute top-0 right-0 -m-8 w-64 h-64 bg-yellow-500/10 rounded-full blur-3xl" />
         <div className="absolute bottom-0 left-0 -m-8 w-64 h-64 bg-orange-500/10 rounded-full blur-3xl" />
 

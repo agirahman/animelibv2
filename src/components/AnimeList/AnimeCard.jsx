@@ -5,22 +5,21 @@ import Link from "next/link";
 import { useState } from "react";
 
 const AnimeCard = ({ anime, icon, index }) => {
-  const [isHovered, setIsHovered] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const animeColor = anime.coverImage.color || "#22c55e";
 
   return (
     <Link
       href={`/anime/${anime.id}`}
       className="group relative block overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-all duration-300"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
+      style={{ "--anime-color": animeColor }}
     >
       {/* Rank Badge */}
       {typeof index !== "undefined" && (
         <div className="absolute top-0 left-0 z-20">
           <div
             className="flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 rounded-br-lg font-bold text-white shadow-md text-[10px] sm:text-sm"
-            style={{ backgroundColor: anime.coverImage.color || "#22c55e" }}
+            style={{ backgroundColor: animeColor }}
           >
             #{index + 1}
           </div>
@@ -33,6 +32,7 @@ const AnimeCard = ({ anime, icon, index }) => {
           src={anime.coverImage.large}
           alt={anime.title.romaji || "Anime Cover"}
           fill
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           loading="lazy"
           className="object-cover transition-transform duration-500 group-hover:scale-110"
           onLoad={() => setIsLoading(false)}
@@ -54,10 +54,7 @@ const AnimeCard = ({ anime, icon, index }) => {
       {/* Content */}
       <div className="absolute bottom-0 left-0 w-full p-2 sm:p-3 bg-gradient-to-t from-black/90 to-transparent pt-8 text-[11px] sm:text-sm">
         <h3
-          className="font-bold line-clamp-2 leading-tight transition-colors"
-          style={{
-            color: isHovered ? anime.coverImage.color || "#22c55e" : "#ffffff",
-          }}
+          className="font-bold line-clamp-2 leading-tight transition-colors text-[#ffffff] group-hover:text-[var(--anime-color)]"
         >
           {anime.title.romaji || anime.title.english}
         </h3>

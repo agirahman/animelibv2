@@ -8,7 +8,7 @@ export const getAnimeOngoing = async () => {
           id
           title { romaji english }
           coverImage { large, medium, color }
-          meanScore
+          popularity
           format
         }
       }

@@ -1,8 +1,19 @@
+'use client'
+
+import { useState } from "react";
+import dynamic from "next/dynamic";
 import Image from "next/image";
 import { AiFillLike, AiOutlineGlobal } from "react-icons/ai";
 import { PiStarFill, PiPlayCircleBold, PiMonitorBold } from "react-icons/pi";
 
+const AnimeReviews = dynamic(() => import("./AnimeReviews"), {
+  ssr: true,
+  loading: () => <div className="h-32 w-full bg-zinc-100 dark:bg-zinc-800 animate-pulse rounded-xl" />
+});
+
 const DetailAnime = ({ anime }) => {
+  const [showTrailer, setShowTrailer] = useState(false);
+
   if (!anime) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[60vh] text-center px-4">
@@ -23,13 +34,15 @@ const DetailAnime = ({ anime }) => {
             fill
             className="object-cover brightness-50"
             priority
+            fetchPriority="high"
+            sizes="100vw"
           />
         )}
         <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-white dark:from-zinc-950 to-transparent" />
       </div>
 
       {/* Content Container - Negative Margin for Overlap */}
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-32 w-full">
+      <div className="relative z-10 max-w-7xl mx-auto px-1 sm:px-6 lg:px-8 -mt-32 w-full">
         <div className="flex flex-col md:flex-row gap-8">
           {/* Left Sidebar (Cover & Info) */}
           <div className="md:w-1/3 lg:w-1/4 flex flex-col items-center md:items-start shrink-0">
@@ -41,7 +54,7 @@ const DetailAnime = ({ anime }) => {
                   width={240}
                   height={360}
                   className="object-cover w-full h-auto transition-transform duration-500 group-hover:scale-110"
-                  priority
+                  loading="eager"
                 />
               )}
             </div>
@@ -137,124 +150,140 @@ const DetailAnime = ({ anime }) => {
               />
             </div>
 
-            {/* Trailer Section */}
+            {/* Trailer Section - Lite Implementation */}
             {anime.trailer?.id && (
               <div className="mb-12">
                 <h3 className="text-2xl font-bold mb-6 flex items-center gap-2 text-zinc-900 dark:text-white">
                   <PiPlayCircleBold className="text-red-600" /> Video Trailer
                 </h3>
-                <div className="relative w-full aspect-video rounded-2xl overflow-hidden shadow-2xl border border-zinc-200 dark:border-zinc-800 bg-black">
-                  {anime.trailer.site?.toLowerCase() === "youtube" ? (
-                    <iframe
-                      src={`https://www.youtube.com/embed/${anime.trailer.id}`}
-                      title="Anime Trailer"
-                      className="absolute inset-0 w-full h-full"
-                      allowFullScreen
-                    />
-                  ) : anime.trailer.site?.toLowerCase() === "dailymotion" ? (
-                    <iframe
-                      src={`https://www.dailymotion.com/embed/video/${anime.trailer.id}`}
-                      title="Anime Trailer"
-                      className="absolute inset-0 w-full h-full"
-                      allowFullScreen
-                    />
-                  ) : (
-                    <div className="flex items-center justify-center h-full text-zinc-500 italic">
-                      Trailer available on {anime.trailer.site}
+                <div className="relative w-full aspect-video rounded-2xl overflow-hidden shadow-2xl border border-zinc-200 dark:border-zinc-800 bg-black group/trailer">
+                  {!showTrailer ? (
+                    <div
+                      className="absolute inset-0 cursor-pointer"
+                      onClick={() => setShowTrailer(true)}
+                    >
+                      {anime.trailer.thumbnail ? (
+                        <Image
+                          src={anime.trailer.thumbnail}
+                          alt="Trailer Thumbnail"
+                          fill
+                          className="object-cover opacity-60 group-hover/trailer:scale-105 transition-transform duration-700"
+                        />
+                      ) : (
+                        <div className="absolute inset-0 bg-zinc-900" />
+                      )}
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <div className="bg-red-600 text-white p-5 rounded-full shadow-2xl transform group-hover/trailer:scale-110 transition-transform duration-300">
+                          <PiPlayCircleBold size={40} />
+                        </div>
+                      </div>
+                      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/60 backdrop-blur-md px-4 py-2 rounded-full text-white text-sm font-medium opacity-0 group-hover/trailer:opacity-100 transition-opacity">
+                        Click to playing trailer
+                      </div>
                     </div>
+                  ) : (
+                    <>
+                      {anime.trailer.site?.toLowerCase() === "youtube" ? (
+                        <iframe
+                          src={`https://www.youtube-nocookie.com/embed/${anime.trailer.id}?autoplay=1`}
+                          title="Anime Trailer"
+                          className="absolute inset-0 w-full h-full"
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                          allowFullScreen
+                        />
+                      ) : anime.trailer.site?.toLowerCase() === "dailymotion" ? (
+                        <iframe
+                          src={`https://www.dailymotion.com/embed/video/${anime.trailer.id}?autoplay=1`}
+                          title="Anime Trailer"
+                          className="absolute inset-0 w-full h-full"
+                          allow="autoplay"
+                          allowFullScreen
+                        />
+                      ) : (
+                        <div className="flex items-center justify-center h-full text-zinc-500 italic">
+                          Trailer available on {anime.trailer.site}
+                        </div>
+                      )}
+                    </>
                   )}
                 </div>
               </div>
             )}
 
-            {/* Streaming Episodes Section */}
+            {/* Streaming Episodes Section - Horizontal Slider */}
             {anime.streamingEpisodes?.length > 0 && (
               <div className="mb-12">
                 <div className="flex items-center justify-between mb-6">
                   <h3 className="text-2xl font-bold flex items-center gap-2 text-zinc-900 dark:text-white">
                     <PiMonitorBold className="text-green-500" /> Watch Online
                   </h3>
-                  <span className="text-xs font-bold uppercase tracking-widest text-zinc-400">
-                    Latest {anime.streamingEpisodes.length} Episodes
-                  </span>
+                  <div className="hidden sm:flex items-center gap-2 text-zinc-400 text-xs font-bold uppercase tracking-widest">
+                    <span>Swipe to explore</span>
+                    <div className="w-8 h-px bg-zinc-800" />
+                    <span>{anime.streamingEpisodes.length} Episodes</span>
+                  </div>
                 </div>
-                <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-                  {anime.streamingEpisodes.map((episode, idx) => (
-                    <a
-                      key={idx}
-                      href={episode.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="group relative flex flex-col gap-3"
-                    >
-                      <div className="relative aspect-video rounded-xl overflow-hidden shadow-lg border border-zinc-200 dark:border-zinc-800 bg-zinc-100 dark:bg-zinc-800">
-                        {episode.thumbnail ? (
-                          <Image
-                            src={episode.thumbnail}
-                            alt={episode.title}
-                            fill
-                            className="object-cover transition-transform duration-500 group-hover:scale-105"
-                          />
-                        ) : (
-                          <div className="flex items-center justify-center h-full text-zinc-400">
-                            <PiPlayCircleBold size={40} className="opacity-20" />
+
+                <div className="relative group/slider">
+                  <div className="flex gap-4 overflow-x-auto pb-6 pt-2 snap-x snap-mandatory scrollbar-hide no-scrollbar -mx-1 px-1 sm:mx-0 sm:px-0">
+                    {anime.streamingEpisodes.map((episode, idx) => (
+                      <a
+                        key={idx}
+                        href={episode.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex-shrink-0 w-[260px] sm:w-[320px] snap-start group relative flex flex-col gap-3"
+                      >
+                        <div className="relative aspect-video rounded-xl overflow-hidden shadow-lg border border-zinc-200 dark:border-zinc-800 bg-zinc-100 dark:bg-zinc-800">
+                          {episode.thumbnail ? (
+                            <Image
+                              src={episode.thumbnail}
+                              alt={episode.title}
+                              fill
+                              loading="lazy"
+                              className="object-cover transition-transform duration-500 group-hover:scale-105"
+                              sizes="(max-width: 640px) 260px, 320px"
+                            />
+                          ) : (
+                            <div className="flex items-center justify-center h-full text-zinc-400">
+                              <PiPlayCircleBold size={40} className="opacity-20" />
+                            </div>
+                          )}
+                          <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                            <div className="bg-white/20 backdrop-blur-md p-3 rounded-full text-white transform scale-90 group-hover:scale-100 transition-transform duration-300">
+                              <PiPlayCircleBold size={24} />
+                            </div>
                           </div>
-                        )}
-                        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                          <div className="bg-white/20 backdrop-blur-md p-3 rounded-full text-white transform scale-90 group-hover:scale-100 transition-transform duration-300">
-                            <PiPlayCircleBold size={24} />
+                          <div className="absolute bottom-2 right-2 px-2 py-1 bg-black/70 backdrop-blur-md rounded text-[10px] font-bold text-white uppercase tracking-wider">
+                            {episode.site}
                           </div>
                         </div>
-                        <div className="absolute bottom-2 right-2 px-2 py-1 bg-black/70 backdrop-blur-md rounded text-[10px] font-bold text-white uppercase tracking-wider">
-                          {episode.site}
+                        <div className="px-1">
+                          <h4 className="text-sm font-bold text-zinc-900 dark:text-zinc-100 line-clamp-1 group-hover:text-green-500 transition-colors">
+                            {episode.title}
+                          </h4>
+                          <p className="text-[11px] text-zinc-500 dark:text-zinc-400 mt-0.5 font-medium">
+                            Official Streaming
+                          </p>
                         </div>
-                      </div>
-                      <div className="px-1">
-                        <h4 className="text-sm font-bold text-zinc-900 dark:text-zinc-100 line-clamp-1 group-hover:text-green-500 transition-colors">
-                          {episode.title}
-                        </h4>
-                        <p className="text-[11px] text-zinc-500 dark:text-zinc-400 mt-0.5 font-medium">
-                          Official Streaming
-                        </p>
-                      </div>
-                    </a>
-                  ))}
+                      </a>
+                    ))}
+                  </div>
+
+                  {/* Gradient Masks for Slider */}
+                  <div className="absolute top-0 right-0 bottom-0 w-20 bg-gradient-to-l from-white dark:from-zinc-950 to-transparent pointer-events-none opacity-0 sm:group-hover/slider:opacity-100 transition-opacity" />
+                  <div className="absolute top-0 left-0 bottom-0 w-20 bg-gradient-to-r from-white dark:from-zinc-950 to-transparent pointer-events-none opacity-0 sm:group-hover/slider:opacity-100 transition-opacity" />
                 </div>
               </div>
             )}
 
-            {/* Reviews Section */}
+
+            {/* Reviews Section - Dynamic Import */}
             <div>
               <h2 className="text-2xl font-bold mb-6 flex items-center gap-2 text-zinc-900 dark:text-white">
                 User Reviews <span className="text-sm font-normal text-zinc-500">({anime.reviews?.nodes?.length || 0})</span>
               </h2>
-              {anime.reviews?.nodes?.length > 0 ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {anime.reviews.nodes.map((review) => (
-                    <div key={review.id} className="bg-zinc-50 dark:bg-zinc-900 p-5 rounded-xl border border-zinc-200 dark:border-zinc-800 hover:shadow-md transition-shadow flex flex-col gap-3">
-                      <div className="flex items-center gap-3">
-                        <img
-                          src={review.user?.avatar?.large}
-                          alt="avatar"
-                          className="w-10 h-10 rounded-full object-cover border border-zinc-300 dark:border-zinc-700"
-                        />
-                        <div className="flex justify-between w-full">
-                          <p className="font-bold text-sm text-zinc-900 dark:text-white">{review.user?.name}</p>
-                          <div className="flex items-center gap-1 text-xs text-gray-500 border border-zinc-200 dark:border-zinc-800 px-2 py-0.5 rounded-full">
-                            <AiFillLike className="text-green-500" />
-                            <span>{review.rating}</span>
-                          </div>
-                        </div>
-                      </div>
-                      <p className="text-sm text-zinc-600 dark:text-zinc-300 line-clamp-4 leading-relaxed italic">
-                        "{review.summary}"
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              ) : (
-                <p className="text-zinc-500 italic">No reviews yet.</p>
-              )}
+              <AnimeReviews reviews={anime.reviews} />
             </div>
           </div>
         </div>

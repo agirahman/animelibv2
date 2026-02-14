@@ -1,7 +1,5 @@
 import { Suspense } from "react";
 import dynamic from "next/dynamic";
-import OngoingAnime from "@/components/Ongoing/OngoingAnime";
-import UpcomingAnime from "@/components/Upcoming/UpcomingAnime";
 import AnimeListSkeleton from "@/components/Skeleton/AnimeListSkeleton";
 
 // Dynamic imports for TBT optimization
@@ -11,6 +9,16 @@ const AnimeRecommendationsSlider = dynamic(() => import("@/components/Recommenda
 });
 
 const PopularAnime = dynamic(() => import("@/components/Popular/PopularAnime"), {
+  ssr: true,
+  loading: () => <AnimeListSkeleton count={6} />
+});
+
+const OngoingAnime = dynamic(() => import("@/components/Ongoing/OngoingAnime"), {
+  ssr: true,
+  loading: () => <AnimeListSkeleton count={6} />
+});
+
+const UpcomingAnime = dynamic(() => import("@/components/Upcoming/UpcomingAnime"), {
   ssr: true,
   loading: () => <AnimeListSkeleton count={6} />
 });

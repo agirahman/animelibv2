@@ -1,8 +1,12 @@
 import { Quicksand } from "next/font/google";
 import "./globals.css";
+import dynamic from "next/dynamic";
 import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 import { ThemeProvider } from "next-themes";
+
+const Footer = dynamic(() => import("@/components/Footer"), {
+  ssr: true,
+});
 
 const quicksand = Quicksand({
   subsets: ["latin"],
