@@ -31,7 +31,7 @@ export const getAnimeRecommendations = async () => {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({ query, variables }),
-    next: { revalidate: 60 }, // cache 1 menit
+    next: { revalidate: 3600 }, // cache 1 jam untuk kestabilan LCP
   });
 
   const json = await res.json();
