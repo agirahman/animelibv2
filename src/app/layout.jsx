@@ -34,7 +34,7 @@ export default function RootLayout({ children }) {
 
           <Navbar />
           <main className="min-h-screen flex justify-center pt-24">
-            <div className="lg:w-16/20 md:w-17/20 sm:w-18/20 w-19/20 relative z-0">{children}</div>
+            <div className="lg:w-16/20 md:w-17/20 sm:w-18/20 w-full px-1 relative z-0">{children}</div>
           </main>
           <Footer />
         </ThemeProvider>

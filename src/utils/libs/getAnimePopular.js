@@ -4,10 +4,10 @@ export const getAnimePopular = async () => {
   const queryPopular = `
     query {
       Page(perPage: 10) {
-        media(type: ANIME, sort: SCORE_DESC) {
+        media(type: ANIME, isAdult: false, sort: SCORE_DESC) {
           id
           title { romaji english }
-          coverImage { large, color }
+          coverImage { large, medium, color }
           genres
           popularity
           format

@@ -46,6 +46,12 @@ export const getAnimeDetail = async (id) => {
           color
           icon
         }
+        streamingEpisodes {
+          site
+          thumbnail
+          title
+          url
+        }
       }
     }
   `;

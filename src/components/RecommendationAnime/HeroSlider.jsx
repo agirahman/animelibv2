@@ -35,6 +35,7 @@ const HeroSlider = ({ recommendations }) => {
                             src={anime.bannerImage || anime.coverImage.extraLarge}
                             alt={anime.title.romaji}
                             fill
+                            priority
                             className="object-cover"
                             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 90vw, 1200px"
                         />

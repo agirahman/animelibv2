@@ -4,11 +4,11 @@ export const getAnimeOngoing = async () => {
   const queryOngoing = `
     query {
       Page(perPage: 6) {
-        media(type: ANIME, status: RELEASING, sort: POPULARITY_DESC) {
+        media(type: ANIME, status: RELEASING, isAdult: false, sort: POPULARITY_DESC) {
           id
           title { romaji english }
-          coverImage { large, color }
-          popularity
+          coverImage { large, medium, color }
+          meanScore
           format
         }
       }

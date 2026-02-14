@@ -33,7 +33,7 @@ const page = async () => {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-1 sm:px-6 lg:px-8">
         {anime.length > 0 ? (
           <InfiniteScrollList
             initialData={anime}

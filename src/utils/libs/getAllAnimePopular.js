@@ -8,7 +8,7 @@ export const getAllAnimePopular = async (page = 1, perPage = 20) => {
           hasNextPage
           currentPage
         }
-        media(type: ANIME, sort: SCORE_DESC) {
+        media(type: ANIME, isAdult: false, sort: SCORE_DESC) {
           id
           title { romaji english }
           coverImage { large, color }

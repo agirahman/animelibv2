@@ -4,7 +4,7 @@ export const getAnimeUpcoming = async () => {
   const queryUpcoming = `
         query {
           Page(perPage:6) {
-            media(type: ANIME, status: NOT_YET_RELEASED, sort: POPULARITY_DESC) {
+            media(type: ANIME, status: NOT_YET_RELEASED, isAdult: false, sort: POPULARITY_DESC) {
               id
               title { romaji english }
               coverImage { large, color }

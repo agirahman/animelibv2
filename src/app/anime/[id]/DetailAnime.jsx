@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { AiFillLike, AiOutlineGlobal } from "react-icons/ai";
-import { PiStarFill, PiPlayCircleBold } from "react-icons/pi";
+import { PiStarFill, PiPlayCircleBold, PiMonitorBold } from "react-icons/pi";
 
 const DetailAnime = ({ anime }) => {
   if (!anime) {
@@ -139,7 +139,7 @@ const DetailAnime = ({ anime }) => {
 
             {/* Trailer Section */}
             {anime.trailer?.id && (
-              <div className="mb-10">
+              <div className="mb-12">
                 <h3 className="text-2xl font-bold mb-6 flex items-center gap-2 text-zinc-900 dark:text-white">
                   <PiPlayCircleBold className="text-red-600" /> Video Trailer
                 </h3>
@@ -163,6 +163,62 @@ const DetailAnime = ({ anime }) => {
                       Trailer available on {anime.trailer.site}
                     </div>
                   )}
+                </div>
+              </div>
+            )}
+
+            {/* Streaming Episodes Section */}
+            {anime.streamingEpisodes?.length > 0 && (
+              <div className="mb-12">
+                <div className="flex items-center justify-between mb-6">
+                  <h3 className="text-2xl font-bold flex items-center gap-2 text-zinc-900 dark:text-white">
+                    <PiMonitorBold className="text-green-500" /> Watch Online
+                  </h3>
+                  <span className="text-xs font-bold uppercase tracking-widest text-zinc-400">
+                    Latest {anime.streamingEpisodes.length} Episodes
+                  </span>
+                </div>
+                <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+                  {anime.streamingEpisodes.map((episode, idx) => (
+                    <a
+                      key={idx}
+                      href={episode.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group relative flex flex-col gap-3"
+                    >
+                      <div className="relative aspect-video rounded-xl overflow-hidden shadow-lg border border-zinc-200 dark:border-zinc-800 bg-zinc-100 dark:bg-zinc-800">
+                        {episode.thumbnail ? (
+                          <Image
+                            src={episode.thumbnail}
+                            alt={episode.title}
+                            fill
+                            className="object-cover transition-transform duration-500 group-hover:scale-105"
+                          />
+                        ) : (
+                          <div className="flex items-center justify-center h-full text-zinc-400">
+                            <PiPlayCircleBold size={40} className="opacity-20" />
+                          </div>
+                        )}
+                        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                          <div className="bg-white/20 backdrop-blur-md p-3 rounded-full text-white transform scale-90 group-hover:scale-100 transition-transform duration-300">
+                            <PiPlayCircleBold size={24} />
+                          </div>
+                        </div>
+                        <div className="absolute bottom-2 right-2 px-2 py-1 bg-black/70 backdrop-blur-md rounded text-[10px] font-bold text-white uppercase tracking-wider">
+                          {episode.site}
+                        </div>
+                      </div>
+                      <div className="px-1">
+                        <h4 className="text-sm font-bold text-zinc-900 dark:text-zinc-100 line-clamp-1 group-hover:text-green-500 transition-colors">
+                          {episode.title}
+                        </h4>
+                        <p className="text-[11px] text-zinc-500 dark:text-zinc-400 mt-0.5 font-medium">
+                          Official Streaming
+                        </p>
+                      </div>
+                    </a>
+                  ))}
                 </div>
               </div>
             )}

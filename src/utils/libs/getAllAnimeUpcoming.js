@@ -8,7 +8,7 @@ export const getAllAnimeUpcoming = async (page = 1, perPage = 20) => {
           hasNextPage
           currentPage
         }
-        media(type: ANIME, status: NOT_YET_RELEASED, sort: POPULARITY_DESC) {
+        media(type: ANIME, status: NOT_YET_RELEASED, isAdult: false, sort: POPULARITY_DESC) {
           id
           title { romaji english }
           coverImage { large, color }

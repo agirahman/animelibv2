@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 
-const AnimeCard = ({ anime, icon, index, priority = false }) => {
+const AnimeCard = ({ anime, icon, index }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -19,7 +19,7 @@ const AnimeCard = ({ anime, icon, index, priority = false }) => {
       {typeof index !== "undefined" && (
         <div className="absolute top-0 left-0 z-20">
           <div
-            className="flex items-center justify-center w-8 h-8 rounded-br-lg font-bold text-white shadow-md text-sm"
+            className="flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 rounded-br-lg font-bold text-white shadow-md text-[10px] sm:text-sm"
             style={{ backgroundColor: anime.coverImage.color || "#22c55e" }}
           >
             #{index + 1}
@@ -33,7 +33,7 @@ const AnimeCard = ({ anime, icon, index, priority = false }) => {
           src={anime.coverImage.large}
           alt={anime.title.romaji || "Anime Cover"}
           fill
-          sizes="(max-width: 640px) 33vw, (max-width: 768px) 25vw, (max-width: 1024px) 20vw, 15vw"
+          loading="lazy"
           className="object-cover transition-transform duration-500 group-hover:scale-110"
           onLoad={() => setIsLoading(false)}
         />
@@ -52,9 +52,9 @@ const AnimeCard = ({ anime, icon, index, priority = false }) => {
       </div>
 
       {/* Content */}
-      <div className="absolute bottom-0 left-0 w-full p-3 bg-gradient-to-t from-black/90 to-transparent pt-8">
+      <div className="absolute bottom-0 left-0 w-full p-2 sm:p-3 bg-gradient-to-t from-black/90 to-transparent pt-8 text-[11px] sm:text-sm">
         <h3
-          className="font-bold text-sm md:text-base line-clamp-2 leading-tight transition-colors"
+          className="font-bold line-clamp-2 leading-tight transition-colors"
           style={{
             color: isHovered ? anime.coverImage.color || "#22c55e" : "#ffffff",
           }}
@@ -62,12 +62,12 @@ const AnimeCard = ({ anime, icon, index, priority = false }) => {
           {anime.title.romaji || anime.title.english}
         </h3>
 
-        <div className="flex items-center justify-between mt-1 text-xs text-gray-300">
+        <div className="flex items-center justify-between mt-1 text-gray-300">
           <div className="flex items-center gap-1">
             {icon}
-            <span>{anime.popularity || anime.meanScore / 10}</span>
+            <span className="font-medium">{anime.popularity || anime.meanScore / 10}</span>
           </div>
-          <span className="bg-white/20 px-1.5 py-0.5 rounded text-[10px] backdrop-blur-sm">
+          <span className="bg-white/10 px-1 py-0.5 rounded text-[9px] backdrop-blur-md">
             {anime.format}
           </span>
         </div>

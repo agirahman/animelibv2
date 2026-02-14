@@ -20,11 +20,11 @@ const HomePage = async () => {
   return (
     <div className="min-h-screen pb-12 overflow-x-hidden">
       {/* Hero Section */}
-      <section className=" max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className=" max-w-7xl mx-auto px-1 sm:px-4 lg:px-6">
         <AnimeRecommendationsSlider />
       </section>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col gap-8 mt-8">
+      <div className="max-w-7xl mx-auto px-1 sm:px-4 lg:px-6 flex flex-col gap-4 mt-4">
         {/* Now Airing Section */}
         <Suspense fallback={<AnimeListSkeleton count={6} />}>
           <OngoingAnime />
