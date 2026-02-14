@@ -20,16 +20,16 @@ export default function RootLayout({ children }) {
       <body className={`${quicksand.className} antialiased bg-white dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 selection:bg-green-500/20 selection:text-green-700 dark:selection:text-green-300`}>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
           {/* Universal Background Layer */}
-          <div className="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
+          <div className="fixed inset-0 -z-10 overflow-hidden pointer-events-none gpu-accelerated">
             {/* Mesh Gradients */}
-            <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-green-500/10 blur-[120px] dark:bg-green-500/5 opacity-60"></div>
-            <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full bg-emerald-500/10 blur-[120px] dark:bg-emerald-500/5 opacity-60"></div>
+            <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-green-500/10 blur-[100px] dark:bg-green-500/5 opacity-60 gpu-accelerated"></div>
+            <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full bg-emerald-500/10 blur-[100px] dark:bg-emerald-500/5 opacity-60 gpu-accelerated"></div>
 
             {/* Dot Pattern Texture */}
-            <div className="absolute inset-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:32px_32px] dark:bg-[radial-gradient(#18181b_1px,transparent_1px)] opacity-70"></div>
+            <div className="absolute inset-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:32px_32px] dark:bg-[radial-gradient(#18181b_1px,transparent_1px)] opacity-70 gpu-accelerated"></div>
 
             {/* Bottom Fade */}
-            <div className="absolute inset-x-0 bottom-0 h-64 bg-gradient-to-t from-white dark:from-zinc-950 to-transparent"></div>
+            <div className="absolute inset-x-0 bottom-0 h-64 bg-gradient-to-t from-white dark:from-zinc-950 to-transparent gpu-accelerated"></div>
           </div>
 
           <Navbar />

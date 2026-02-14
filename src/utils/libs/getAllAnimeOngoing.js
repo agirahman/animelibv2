@@ -1,9 +1,13 @@
 import { fetchData } from "../services/api";
 
-export const getAllAnimeOngoing = async () => {
+export const getAllAnimeOngoing = async (page = 1, perPage = 20) => {
   const queryAllAnimeOngoing = `
-    query {
-      Page(perPage: 50) {
+    query ($page: Int, $perPage: Int) {
+      Page(page: $page, perPage: $perPage) {
+        pageInfo {
+          hasNextPage
+          currentPage
+        }
         media(type: ANIME, status: RELEASING, sort: POPULARITY_DESC) {
           id
           title { romaji english }
@@ -15,6 +19,9 @@ export const getAllAnimeOngoing = async () => {
     }
   `;
 
-  const data = await fetchData(queryAllAnimeOngoing);
-  return data?.Page?.media || [];
+  const data = await fetchData(queryAllAnimeOngoing, { page, perPage });
+  return {
+    anime: data?.Page?.media || [],
+    pageInfo: data?.Page?.pageInfo || { hasNextPage: false }
+  };
 };

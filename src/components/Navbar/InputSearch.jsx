@@ -47,8 +47,9 @@ const InputSearch = () => {
     const timer = setTimeout(async () => {
       setLoading(true);
       try {
-        const results = await fetchData(SUGGESTION_QUERY, { search: keyword });
-        setSuggestions(results);
+        const data = await fetchData(SUGGESTION_QUERY, { search: keyword });
+        const media = data?.Page?.media || [];
+        setSuggestions(media);
         setShowSuggestions(true);
       } catch (error) {
         console.error("Suggestion fetch error:", error);
@@ -156,7 +157,7 @@ const InputSearch = () => {
       </div>
 
       {/* Suggestions Dropdown */}
-      {showSuggestions && (keyword.length >= 2) && (suggestions.length > 0 || loading) && (
+      {showSuggestions && keyword.length >= 2 && (suggestions?.length > 0 || loading) && (
         <div className="absolute top-full left-0 mt-2 w-full min-w-[280px] sm:min-w-[350px] bg-white/90 dark:bg-zinc-900/95 backdrop-blur-lg border border-zinc-200 dark:border-zinc-800 rounded-2xl shadow-2xl overflow-hidden z-50 animate-in fade-in slide-in-from-top-2 duration-200">
           {loading ? (
             <div className="p-4 text-center text-sm text-zinc-500">
@@ -177,8 +178,8 @@ const InputSearch = () => {
                   }}
                   onMouseEnter={() => setSelectedIndex(index)}
                   className={`flex items-center gap-3 p-3 text-left transition-colors ${selectedIndex === index
-                      ? "bg-green-500/10 dark:bg-green-500/5 text-green-600 dark:text-green-400"
-                      : "hover:bg-zinc-50 dark:hover:bg-zinc-800/50"
+                    ? "bg-green-500/10 dark:bg-green-500/5 text-green-600 dark:text-green-400"
+                    : "hover:bg-zinc-50 dark:hover:bg-zinc-800/50"
                     }`}
                 >
                   <div className="relative w-10 h-14 flex-shrink-0 rounded-md overflow-hidden shadow-sm">

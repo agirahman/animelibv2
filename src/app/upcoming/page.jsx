@@ -1,11 +1,12 @@
-import AnimeCard from "@/components/AnimeList/AnimeCard";
 import { FcLike } from "react-icons/fc";
 import { MdOutlineUpcoming } from "react-icons/md";
 import React from "react";
 import { getAllAnimeUpcoming } from "@/utils/libs/getAllAnimeUpcoming";
+import { fetchUpcomingAction } from "@/utils/actions/animeActions";
+import InfiniteScrollList from "@/components/AnimeList/InfiniteScrollList";
 
 const page = async () => {
-  const allAnimeUpcoming = await getAllAnimeUpcoming();
+  const { anime, pageInfo } = await getAllAnimeUpcoming(1, 18);
 
   return (
     <div className="min-h-screen pb-12">
@@ -32,11 +33,15 @@ const page = async () => {
         </div>
       </div>
 
-      <div className="grid xl:grid-cols-6 lg:grid-cols-5 md:grid-cols-4 grid-cols-2 gap-4 md:gap-8 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {allAnimeUpcoming.length > 0 ? (
-          allAnimeUpcoming.map((anime, index) => (
-            <AnimeCard key={anime.id} anime={anime} icon={<FcLike />} index={index} />
-          ))
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {anime.length > 0 ? (
+          <InfiniteScrollList
+            initialData={anime}
+            initialPageInfo={pageInfo}
+            fetchAction={fetchUpcomingAction}
+            icon={<FcLike />}
+            startIndex={0}
+          />
         ) : (
           <div className="col-span-full flex flex-col items-center justify-center py-20 text-center bg-zinc-100 dark:bg-zinc-900 rounded-2xl border-2 border-dashed border-zinc-200 dark:border-zinc-800">
             <div className="p-6 bg-zinc-200 dark:bg-zinc-800 rounded-full mb-4">

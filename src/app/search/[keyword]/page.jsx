@@ -1,11 +1,12 @@
-import AnimeCard from "@/components/AnimeList/AnimeCard";
 import { PiStarFill, PiSmileySad } from "react-icons/pi";
 import { getAnimeSearch } from "@/utils/libs/getAnimeSearch";
+import { fetchSearchAction } from "@/utils/actions/animeActions";
+import InfiniteScrollList from "@/components/AnimeList/InfiniteScrollList";
 import Link from "next/link";
 
 const SearchPage = async ({ params }) => {
   const { keyword } = await params;
-  const { dataAnimeSearch, decodeKeyword } = await getAnimeSearch(keyword);
+  const { dataAnimeSearch, pageInfo, decodeKeyword } = await getAnimeSearch(keyword, 1, 24);
 
   return (
     <div className="min-h-screen pb-12">
@@ -25,23 +26,21 @@ const SearchPage = async ({ params }) => {
             Results for <span className="text-green-500 italic">"{decodeKeyword}"</span>
           </h1>
           <p className="text-zinc-600 dark:text-zinc-400 text-lg md:text-xl max-w-2xl leading-relaxed">
-            Found <span className="font-bold text-zinc-900 dark:text-white">{dataAnimeSearch.length}</span> titles matching your research. Ready to dive into something new?
+            Found hundreds of titles matching your research. Ready to dive into something new?
           </p>
         </div>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {dataAnimeSearch.length > 0 ? (
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 md:gap-8">
-            {dataAnimeSearch.map((anime, index) => (
-              <AnimeCard
-                key={anime.id}
-                anime={anime}
-                index={index}
-                icon={<PiStarFill className="text-yellow-500" />}
-              />
-            ))}
-          </div>
+          <InfiniteScrollList
+            initialData={dataAnimeSearch}
+            initialPageInfo={pageInfo}
+            fetchAction={fetchSearchAction}
+            actionParams={[keyword]}
+            icon={<PiStarFill className="text-yellow-500" />}
+            startIndex={0}
+          />
         ) : (
           <div className="flex flex-col items-center justify-center py-24 text-center bg-zinc-50 dark:bg-zinc-900/50 rounded-2xl border-2 border-dashed border-zinc-200 dark:border-zinc-800">
             <div className="p-8 bg-zinc-200 dark:bg-zinc-800 rounded-full mb-6">
