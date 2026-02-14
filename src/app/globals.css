@@ -1,10 +1,6 @@
 @import "tailwindcss";
 @custom-variant dark (&:where(.dark, .dark *));
 
-html {
-  scroll-behavior: smooth;
-}
-
 @layer base {
 
   *,
@@ -20,20 +16,7 @@ html {
 
   body {
     transition: background-color 0.3s ease, color 0.3s ease;
-    @apply antialiased;
   }
-}
-
-/* Optimization for Smooth Scrolling */
-.gpu-accelerated {
-  transform: translateZ(0);
-  will-change: transform;
-  backface-visibility: hidden;
-}
-
-.content-visibility-auto {
-  content-visibility: auto;
-  contain-intrinsic-size: 1px 1000px;
 }
 
 
