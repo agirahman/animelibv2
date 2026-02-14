@@ -6,6 +6,7 @@ import { useState } from "react";
 
 const AnimeCard = ({ anime, icon, index, priority = false }) => {
   const [isHovered, setIsHovered] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   return (
     <Link
@@ -27,14 +28,14 @@ const AnimeCard = ({ anime, icon, index, priority = false }) => {
       )}
 
       {/* Image Container */}
-      <div className="relative w-full aspect-[2/3] overflow-hidden">
+      <div className={`relative w-full aspect-[2/3] overflow-hidden bg-zinc-200 dark:bg-zinc-800 ${isLoading ? "animate-pulse" : ""}`}>
         <Image
           src={anime.coverImage.large}
           alt={anime.title.romaji || "Anime Cover"}
           fill
           sizes="(max-width: 640px) 33vw, (max-width: 768px) 25vw, (max-width: 1024px) 20vw, 15vw"
           className="object-cover transition-transform duration-500 group-hover:scale-110"
-          priority={priority}
+          onLoad={() => setIsLoading(false)}
         />
 
         {/* Hover Overlay Gradient */}

@@ -1,26 +1,11 @@
 import AnimeCard from "@/components/AnimeList/AnimeCard";
-import Header from "@/components/Header";
 import { FcLike } from "react-icons/fc";
-import { fetchData } from "@/utils/services/api";
 import { MdOutlineUpcoming } from "react-icons/md";
 import React from "react";
-
-const queryUpcoming = `
-    query {
-      Page(perPage:50) {
-        media(type: ANIME, status: NOT_YET_RELEASED, sort: POPULARITY_DESC) {
-          id
-          title { romaji english }
-          coverImage { large, color }
-          popularity
-          format
-        }
-      }
-    }
-  `;
+import { getAllAnimeUpcoming } from "@/utils/libs/getAllAnimeUpcoming";
 
 const page = async () => {
-  const api = await fetchData(queryUpcoming);
+  const allAnimeUpcoming = await getAllAnimeUpcoming();
 
   return (
     <div className="min-h-screen pb-12">
@@ -48,8 +33,8 @@ const page = async () => {
       </div>
 
       <div className="grid xl:grid-cols-6 lg:grid-cols-5 md:grid-cols-4 grid-cols-2 gap-4 md:gap-8 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {api.length > 0 ? (
-          api.map((anime, index) => (
+        {allAnimeUpcoming.length > 0 ? (
+          allAnimeUpcoming.map((anime, index) => (
             <AnimeCard key={anime.id} anime={anime} icon={<FcLike />} index={index} />
           ))
         ) : (

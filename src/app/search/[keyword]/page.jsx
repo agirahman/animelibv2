@@ -1,45 +1,11 @@
 import AnimeCard from "@/components/AnimeList/AnimeCard";
 import { PiStarFill, PiSmileySad } from "react-icons/pi";
+import { getAnimeSearch } from "@/utils/libs/getAnimeSearch";
 import Link from "next/link";
 
 const SearchPage = async ({ params }) => {
   const { keyword } = await params;
-
-  const query = `
-    query ($search: String) {
-      Page(perPage: 50) {
-        media(search: $search, type: ANIME, isAdult: false, sort: POPULARITY_DESC) {
-          id
-          title {
-            romaji
-            english
-          }
-          coverImage {
-            large, color
-          }
-          meanScore
-          format
-          popularity
-        }
-      }
-    }
-  `;
-
-  const response = await fetch("https://graphql.anilist.co", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      query,
-      variables: { search: keyword },
-    }),
-  });
-
-  const data = await response.json();
-  const api = data.data?.Page?.media || [];
-
-  const decodeKeyword = decodeURIComponent(keyword);
+  const { dataAnimeSearch, decodeKeyword } = await getAnimeSearch(keyword);
 
   return (
     <div className="min-h-screen pb-12">
@@ -59,15 +25,15 @@ const SearchPage = async ({ params }) => {
             Results for <span className="text-green-500 italic">"{decodeKeyword}"</span>
           </h1>
           <p className="text-zinc-600 dark:text-zinc-400 text-lg md:text-xl max-w-2xl leading-relaxed">
-            Found <span className="font-bold text-zinc-900 dark:text-white">{api.length}</span> titles matching your research. Ready to dive into something new?
+            Found <span className="font-bold text-zinc-900 dark:text-white">{dataAnimeSearch.length}</span> titles matching your research. Ready to dive into something new?
           </p>
         </div>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {api.length > 0 ? (
+        {dataAnimeSearch.length > 0 ? (
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 md:gap-8">
-            {api.map((anime, index) => (
+            {dataAnimeSearch.map((anime, index) => (
               <AnimeCard
                 key={anime.id}
                 anime={anime}

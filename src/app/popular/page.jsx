@@ -1,26 +1,13 @@
 import AnimeCard from "@/components/AnimeList/AnimeCard";
 import { PiStarFill } from "react-icons/pi";
-import Header from "@/components/Header";
-import { fetchData } from "@/utils/services/api";
 import { MdOutlineLeaderboard } from "react-icons/md";
+import { getAllAnimePopular } from "@/utils/libs/getAllAnimePopular";
 import React from "react";
 
-const queryNow = `
-    query {
-      Page(perPage: 50) {
-        media(type: ANIME, sort: SCORE_DESC) {
-          id
-          title { romaji english }
-          coverImage { large, color }
-          meanScore
-          format
-        }
-      }
-    }
-  `;
+
 
 const page = async () => {
-  const api = await fetchData(queryNow);
+  const dataAllAnimePopular = await getAllAnimePopular();
 
   return (
     <div className="min-h-screen pb-12">
@@ -48,8 +35,8 @@ const page = async () => {
       </div>
 
       <div className="grid xl:grid-cols-6 lg:grid-cols-5 md:grid-cols-4 grid-cols-2 gap-4 md:gap-8 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {api.length > 0 ? (
-          api.map((anime, index) => (
+        {dataAllAnimePopular.length > 0 ? (
+          dataAllAnimePopular.map((anime, index) => (
             <div key={anime.id} className="relative">
               {/* <div className="absolute -top-2 -left-2 z-20 w-8 h-8 flex items-center justify-center bg-yellow-500 text-black font-bold text-xs rounded-lg shadow-lg">
                 #{index + 1}

@@ -8,8 +8,8 @@ import { FaPlay, FaInfoCircle } from "react-icons/fa";
 const HeroSlider = ({ recommendations }) => {
     const [currentSlide, setCurrentSlide] = useState(0);
 
-    // Limit to top 10 recommendations for performance (LCP/TBT)
-    const slides = recommendations.slice(0, 10);
+    // Limit to top 5 recommendations for better performance (LCP/TBT)
+    const slides = recommendations.slice(0, 5);
 
     useEffect(() => {
         if (slides.length <= 1) return;
@@ -32,12 +32,11 @@ const HeroSlider = ({ recommendations }) => {
                     {/* Background Image */}
                     <div className="absolute inset-0">
                         <Image
-                            src={anime.bannerImage || anime.coverImage.large}
+                            src={anime.bannerImage || anime.coverImage.extraLarge}
                             alt={anime.title.romaji}
                             fill
                             className="object-cover"
-                            priority={index === 0}
-                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw, 1280px"
+                            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 90vw, 1200px"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent" />
                     </div>

@@ -1,26 +1,10 @@
 import AnimeCard from "@/components/AnimeList/AnimeCard";
-import Header from "@/components/Header";
 import { PiStarFill } from "react-icons/pi";
-import { fetchData } from "@/utils/services/api";
 import { MdOutlineLiveTv } from "react-icons/md";
-import React from "react";
-
-const queryNow = `
-    query {
-      Page(perPage: 50) {
-        media(type: ANIME, status: RELEASING, sort: POPULARITY_DESC) {
-          id
-          title { romaji english }
-          coverImage { large, color }
-          meanScore
-          format
-        }
-      }
-    }
-  `;
+import { getAllAnimeOngoing } from "@/utils/libs/getAllAnimeOngoing"
 
 const page = async () => {
-  const api = await fetchData(queryNow);
+  const dataAllAnimeOngoing = await getAllAnimeOngoing();
 
   return (
     <div className="min-h-screen pb-12">
@@ -48,8 +32,8 @@ const page = async () => {
       </div>
 
       <div className="grid xl:grid-cols-6 lg:grid-cols-5 md:grid-cols-4 grid-cols-2 gap-4 md:gap-8 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {api.length > 0 ? (
-          api.map((anime, index) => (
+        {dataAllAnimeOngoing.length > 0 ? (
+          dataAllAnimeOngoing.map((anime, index) => (
             <AnimeCard
               key={anime.id}
               anime={anime}

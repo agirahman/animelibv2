@@ -1,19 +1,30 @@
 import Image from "next/image";
-import { AiFillLike } from "react-icons/ai";
-import { PiStarFill } from "react-icons/pi";
+import { AiFillLike, AiOutlineGlobal } from "react-icons/ai";
+import { PiStarFill, PiPlayCircleBold } from "react-icons/pi";
 
 const DetailAnime = ({ anime }) => {
+  if (!anime) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-[60vh] text-center px-4">
+        <h2 className="text-2xl font-bold mb-2">Anime Not Found</h2>
+        <p className="text-zinc-500">We couldn't find the details for this anime titles.</p>
+      </div>
+    );
+  }
+
   return (
     <div className="relative flex flex-col pb-12">
       {/* Banner */}
-      <div className="relative w-full h-[300px] md:h-[400px] overflow-hidden">
-        <Image
-          src={anime.bannerImage || anime.coverImage.large}
-          alt="banner image"
-          fill
-          className="object-cover brightness-50"
-          priority
-        />
+      <div className="relative w-full h-[300px] md:h-[400px] overflow-hidden bg-zinc-200 dark:bg-zinc-800">
+        {(anime.bannerImage || anime.coverImage?.large) && (
+          <Image
+            src={anime.bannerImage || anime.coverImage.large}
+            alt="banner image"
+            fill
+            className="object-cover brightness-50"
+            priority
+          />
+        )}
         <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-white dark:from-zinc-950 to-transparent" />
       </div>
 
@@ -22,24 +33,26 @@ const DetailAnime = ({ anime }) => {
         <div className="flex flex-col md:flex-row gap-8">
           {/* Left Sidebar (Cover & Info) */}
           <div className="md:w-1/3 lg:w-1/4 flex flex-col items-center md:items-start shrink-0">
-            <div className="relative rounded-xl shadow-2xl overflow-hidden border-4 border-white dark:border-zinc-900 group">
-              <Image
-                src={anime.coverImage.large}
-                alt="cover anime"
-                width={240}
-                height={360}
-                className="object-cover w-full h-auto transition-transform duration-500 group-hover:scale-110"
-                priority
-              />
+            <div className="relative rounded-xl shadow-2xl overflow-hidden border-4 border-white dark:border-zinc-900 group bg-zinc-200 dark:bg-zinc-800">
+              {anime.coverImage?.large && (
+                <Image
+                  src={anime.coverImage.large}
+                  alt="cover anime"
+                  width={240}
+                  height={360}
+                  className="object-cover w-full h-auto transition-transform duration-500 group-hover:scale-110"
+                  priority
+                />
+              )}
             </div>
 
             <div className="flex flex-wrap justify-center md:justify-start gap-2 my-6 w-full">
-              {anime.genres.map((genre, index) => (
+              {(anime.genres || []).map((genre, index) => (
                 <span
                   key={index}
                   className="px-3 py-1 text-xs font-semibold rounded-full bg-zinc-200 dark:bg-zinc-800 text-zinc-700 dark:text-gray-300 border border-zinc-300 dark:border-zinc-700"
                   style={{
-                    color: anime.coverImage.color || "#22c55e",
+                    color: anime.coverImage?.color || "#22c55e",
                   }}
                 >
                   {genre}
@@ -47,47 +60,117 @@ const DetailAnime = ({ anime }) => {
               ))}
             </div>
 
-            <div className="w-full bg-zinc-100 dark:bg-zinc-900 rounded-xl p-5 shadow-sm space-y-3 border border-zinc-200 dark:border-zinc-800">
-              <h3 className="font-bold text-lg mb-2 border-b border-zinc-300 dark:border-zinc-700 pb-2">Information</h3>
-              {[
-                ["Score", <span key="score" className="flex items-center gap-1 text-yellow-500"><PiStarFill /> {anime.meanScore / 10 || "N/A"}</span>],
-                ["Popularity", anime.popularity?.toLocaleString() || "N/A"],
-                ["Type", anime.type],
-                ["Format", anime.format],
-                ["Status", `${anime.season} ${anime.seasonYear || ""}`],
-                ["Episodes", anime.episodes || "?"],
-                ["Duration", `${anime.duration || "?"} mins`],
-                ["Start Date", `${anime.startDate.day || "?"}/${anime.startDate.month || "?"}/${anime.startDate.year}`],
-              ].map(([label, value], i) => (
-                <div key={i} className="flex justify-between text-sm">
-                  <span className="text-zinc-500 dark:text-zinc-400">{label}</span>
-                  <span className="font-medium text-zinc-800 dark:text-zinc-200">{value}</span>
+            <div className="w-full space-y-6">
+              <div className="bg-zinc-100 dark:bg-zinc-900 rounded-xl p-5 shadow-sm space-y-3 border border-zinc-200 dark:border-zinc-800">
+                <h3 className="font-bold text-lg mb-2 border-b border-zinc-300 dark:border-zinc-700 pb-2 text-zinc-900 dark:text-white">Information</h3>
+                {[
+                  ["Score", <span key="score" className="flex items-center gap-1 text-yellow-500"><PiStarFill /> {anime.meanScore ? anime.meanScore / 10 : "N/A"}</span>],
+                  ["Popularity", anime.popularity?.toLocaleString() || "N/A"],
+                  ["Type", anime.type || "N/A"],
+                  ["Format", anime.format || "N/A"],
+                  ["Status", `${anime.season || ""} ${anime.seasonYear || ""}`.trim() || "N/A"],
+                  ["Episodes", anime.episodes || "?"],
+                  ["Duration", anime.duration ? `${anime.duration} mins` : "?"],
+                  ["Start Date", `${anime.startDate?.day || "?"}/${anime.startDate?.month || "?"}/${anime.startDate?.year || "?"}`],
+                ].map(([label, value], i) => (
+                  <div key={i} className="flex justify-between text-sm">
+                    <span className="text-zinc-500 dark:text-zinc-400">{label}</span>
+                    <span className="font-medium text-zinc-800 dark:text-zinc-200">{value}</span>
+                  </div>
+                ))}
+              </div>
+
+              {/* External Links */}
+              {anime.externalLinks?.length > 0 && (
+                <div className="bg-zinc-100 dark:bg-zinc-900 rounded-xl p-5 shadow-sm border border-zinc-200 dark:border-zinc-800">
+                  <h3 className="font-bold text-lg mb-4 border-b border-zinc-300 dark:border-zinc-700 pb-2 text-zinc-900 dark:text-white">External Links</h3>
+                  <div className="flex flex-col gap-2">
+                    {anime.externalLinks.map((link, idx) => (
+                      <a
+                        key={idx}
+                        href={link.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-3 p-2 rounded-lg bg-white dark:bg-zinc-800/50 hover:bg-zinc-200 dark:hover:bg-zinc-800 transition-colors border border-zinc-200 dark:border-zinc-700/50 group"
+                      >
+                        <div
+                          className="w-8 h-8 rounded-md flex items-center justify-center text-white shrink-0 shadow-sm"
+                          style={{ backgroundColor: link.color || "#4ade80" }}
+                        >
+                          {link.icon ? (
+                            <Image
+                              src={link.icon}
+                              alt={`${link.site} icon`}
+                              width={20}
+                              height={20}
+                              className="object-contain p-1"
+                            />
+                          ) : (
+                            <AiOutlineGlobal className="text-lg" />
+                          )}
+                        </div>
+                        <span className="text-sm font-medium text-zinc-700 dark:text-zinc-300 group-hover:text-zinc-900 dark:group-hover:text-white truncate">
+                          {link.site}
+                        </span>
+                      </a>
+                    ))}
+                  </div>
                 </div>
-              ))}
+              )}
             </div>
           </div>
 
           {/* Main Content (Title, Desc, Reviews) */}
           <div className="md:w-2/3 lg:w-3/4 flex flex-col pt-4 md:pt-16">
             <h1 className="text-3xl md:text-5xl font-bold mb-2 text-zinc-900 dark:text-white leading-tight">
-              {anime.title.romaji}
+              {anime.title?.romaji || anime.title?.english}
             </h1>
             <p className="text-lg text-zinc-500 dark:text-zinc-400 mb-6 font-medium">
               {(anime.studios?.nodes || []).map((studio) => studio.name).join(", ")}
             </p>
 
-            <div className="bg-white dark:bg-zinc-900/50 p-6 rounded-xl border border-zinc-200 dark:border-zinc-800 shadow-sm mb-10">
-              <h3 className="text-xl font-bold mb-4 border-b border-zinc-200 dark:border-zinc-800 pb-2">Synopsis</h3>
+            <div className="bg-white dark:bg-zinc-900/50 p-6 rounded-xl border border-zinc-200 dark:border-zinc-800 shadow-sm mb-8">
+              <h3 className="text-xl font-bold mb-4 border-b border-zinc-200 dark:border-zinc-800 pb-2 text-zinc-900 dark:text-white">Synopsis</h3>
               <div
                 className="text-base leading-relaxed text-zinc-700 dark:text-zinc-300 prose prose-zinc dark:prose-invert max-w-none"
-                dangerouslySetInnerHTML={{ __html: anime.description }}
+                dangerouslySetInnerHTML={{ __html: anime.description || "No description available." }}
               />
             </div>
 
+            {/* Trailer Section */}
+            {anime.trailer?.id && (
+              <div className="mb-10">
+                <h3 className="text-2xl font-bold mb-6 flex items-center gap-2 text-zinc-900 dark:text-white">
+                  <PiPlayCircleBold className="text-red-600" /> Video Trailer
+                </h3>
+                <div className="relative w-full aspect-video rounded-2xl overflow-hidden shadow-2xl border border-zinc-200 dark:border-zinc-800 bg-black">
+                  {anime.trailer.site?.toLowerCase() === "youtube" ? (
+                    <iframe
+                      src={`https://www.youtube.com/embed/${anime.trailer.id}`}
+                      title="Anime Trailer"
+                      className="absolute inset-0 w-full h-full"
+                      allowFullScreen
+                    />
+                  ) : anime.trailer.site?.toLowerCase() === "dailymotion" ? (
+                    <iframe
+                      src={`https://www.dailymotion.com/embed/video/${anime.trailer.id}`}
+                      title="Anime Trailer"
+                      className="absolute inset-0 w-full h-full"
+                      allowFullScreen
+                    />
+                  ) : (
+                    <div className="flex items-center justify-center h-full text-zinc-500 italic">
+                      Trailer available on {anime.trailer.site}
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+
             {/* Reviews Section */}
             <div>
-              <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
-                User Reviews <span className="text-sm font-normal text-zinc-500">({anime.reviews?.nodes.length || 0})</span>
+              <h2 className="text-2xl font-bold mb-6 flex items-center gap-2 text-zinc-900 dark:text-white">
+                User Reviews <span className="text-sm font-normal text-zinc-500">({anime.reviews?.nodes?.length || 0})</span>
               </h2>
               {anime.reviews?.nodes?.length > 0 ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -95,14 +178,14 @@ const DetailAnime = ({ anime }) => {
                     <div key={review.id} className="bg-zinc-50 dark:bg-zinc-900 p-5 rounded-xl border border-zinc-200 dark:border-zinc-800 hover:shadow-md transition-shadow flex flex-col gap-3">
                       <div className="flex items-center gap-3">
                         <img
-                          src={review.user.avatar.large}
+                          src={review.user?.avatar?.large}
                           alt="avatar"
                           className="w-10 h-10 rounded-full object-cover border border-zinc-300 dark:border-zinc-700"
                         />
                         <div className="flex justify-between w-full">
-                          <p className="font-bold text-sm text-zinc-900 dark:text-white">{review.user.name}</p>
-                          <div className="flex items-center gap-1 text-xs text-gray-500">
-                            <AiFillLike />
+                          <p className="font-bold text-sm text-zinc-900 dark:text-white">{review.user?.name}</p>
+                          <div className="flex items-center gap-1 text-xs text-gray-500 border border-zinc-200 dark:border-zinc-800 px-2 py-0.5 rounded-full">
+                            <AiFillLike className="text-green-500" />
                             <span>{review.rating}</span>
                           </div>
                         </div>
@@ -121,7 +204,7 @@ const DetailAnime = ({ anime }) => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default DetailAnime
+export default DetailAnime;
