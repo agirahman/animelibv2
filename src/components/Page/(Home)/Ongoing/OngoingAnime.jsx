@@ -1,6 +1,6 @@
 import { getAnimeOngoing } from "@/utils/libs/getAnimeOngoing";
-import AnimeList from "@/components/AnimeList";
-import TitleList from "@/components/AnimeList/TitleList";
+import AnimeList from "@/components/ui/AnimeList";
+import TitleList from "@/components/ui/AnimeList/TitleList";
 
 const OngoingAnime = async () => {
     const ongoingAnime = await getAnimeOngoing();

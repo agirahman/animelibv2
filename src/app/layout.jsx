@@ -1,10 +1,10 @@
 import { Quicksand } from "next/font/google";
 import "./globals.css";
 import dynamic from "next/dynamic";
-import Navbar from "@/components/Navbar";
+import Navbar from "@/components/ui/Navbar";
 import { ThemeProvider } from "next-themes";
 
-const Footer = dynamic(() => import("@/components/Footer"), {
+const Footer = dynamic(() => import("@/components/ui/Footer"), {
   ssr: true,
 });
 

@@ -1,12 +1,7 @@
-import DetailAnime from "./DetailAnime";
-import { getAnimeDetail } from "@/utils/libs/getAnimeDetail";
+import AnimePage from "@/components/Page/(Anime)";
 
-const page = async ({ params }) => {
-  const animeDetail = await getAnimeDetail((await params).id)
+const page = ({ params }) => {
+  return <AnimePage params={params} />
+}
 
-  return (
-    <DetailAnime anime={animeDetail} />
-  );
-};
-
-export default page;
+export default page

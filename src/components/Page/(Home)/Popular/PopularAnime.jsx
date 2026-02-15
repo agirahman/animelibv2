@@ -1,6 +1,6 @@
 import { getAnimePopular } from "@/utils/libs/getAnimePopular";
-import TopAnimeList from "@/components/AnimeList/TopAnimeList";
-import TitleList from "@/components/AnimeList/TitleList";
+import TopAnimeList from "@/components/ui/AnimeList/TopAnimeList";
+import TitleList from "@/components/ui/AnimeList/TitleList";
 
 const PopularAnime = async () => {
     const topAnime = await getAnimePopular();

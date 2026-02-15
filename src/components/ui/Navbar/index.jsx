@@ -3,7 +3,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import ThemeSwitch from "../Theme/ThemeSwitch";
+import ThemeSwitch from "../../Theme/ThemeSwitch";
 import InputSearch from "./InputSearch";
 import MobileNavbar from "./MobileNavbar";
 

@@ -1,4 +1,4 @@
-import AnimeListSkeleton from "@/components/Skeleton/AnimeListSkeleton";
+import AnimeListSkeleton from "@/components/ui/Skeleton/AnimeListSkeleton";
 
 export default function Loading() {
   return (
