@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { PiStarFill } from "react-icons/pi";
 import { MdFormatListBulleted, MdCalendarToday, MdOutlineUpdate } from "react-icons/md";
 import { useState } from "react";
 
@@ -45,17 +44,6 @@ const TopAnimeItem = ({ anime, index }) => {
                 <div className="flex-grow flex flex-col justify-between py-0.5 sm:py-1">
                     <div>
                         <div className="flex items-center gap-2 mb-1.5 sm:mb-2 text-[10px] sm:text-xs">
-                            <div
-                                className="flex items-center gap-1 sm:gap-1.5 px-2 py-0.5 sm:py-1 rounded-md sm:rounded-lg border"
-                                style={{
-                                    backgroundColor: `${themeColor}10`,
-                                    color: themeColor,
-                                    borderColor: `${themeColor}20`
-                                }}
-                            >
-                                <PiStarFill size={14} className="sm:w-4" />
-                                <span className="font-bold tracking-tight">{anime.meanScore / 10}</span>
-                            </div>
                             <span className="font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-widest bg-zinc-200/50 dark:bg-zinc-800/50 px-1.5 py-0.5 sm:px-2 rounded">
                                 {anime.format}
                             </span>

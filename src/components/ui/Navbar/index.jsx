@@ -38,9 +38,20 @@ const Navbar = () => {
                 <Link
                   key={link.name}
                   href={link.href}
-                  className={`transition-all hover:text-green-500 hover:underline underline-offset-4 ${isActive ? "text-green-500 underline" : ""}`}
+                  className={`relative px-4 py-2 rounded-full text-sm font-bold transition-all duration-300 group overflow-hidden ${isActive
+                      ? "text-green-500 bg-green-500/10 border border-green-500/20 shadow-[0_0_15px_rgba(34,197,94,0.1)]"
+                      : "text-gray-600 dark:text-gray-400 hover:text-green-500 hover:bg-green-500/5"
+                    }`}
                 >
                   {link.name}
+                  {/* Subtle Glow Indicator */}
+                  {isActive && (
+                    <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1 h-1 bg-green-500 rounded-full blur-[2px]" />
+                  )}
+                  {/* Hover Slide Effect */}
+                  {!isActive && (
+                    <span className="absolute bottom-0 left-0 w-full h-0.5 bg-green-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-center" />
+                  )}
                 </Link>
               );
             })}

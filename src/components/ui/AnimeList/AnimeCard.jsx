@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 
-const AnimeCard = ({ anime, icon, index }) => {
+const AnimeCard = ({ anime, index }) => {
   const [isLoading, setIsLoading] = useState(true);
   const animeColor = anime.coverImage.color || "#22c55e";
 
@@ -18,13 +18,20 @@ const AnimeCard = ({ anime, icon, index }) => {
       {typeof index !== "undefined" && (
         <div className="absolute top-0 left-0 z-20">
           <div
-            className="flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 rounded-br-lg font-bold text-white shadow-md text-[10px] sm:text-sm"
-            style={{ backgroundColor: animeColor }}
+            className="flex items-center justify-center min-w-[32px] sm:min-w-[40px] px-1.5 sm:px-2 py-1 sm:py-1.5 rounded-br-xl font-black text-white shadow-[2px_2px_10px_rgba(0,0,0,0.3)] text-[10px] sm:text-xs tracking-tighter transition-transform duration-300 group-hover:scale-110 group-hover:-translate-x-1 group-hover:-translate-y-1 border-b border-r border-white/10"
+            style={{ backgroundColor: `${animeColor}dd` }}
           >
-            #{index + 1}
+            <span className="drop-shadow-md">#{index + 1}</span>
           </div>
         </div>
       )}
+
+      {/* Format Badge (Top Right) */}
+      <div className="absolute top-0 right-0 z-20">
+        <div className="bg-black/60 backdrop-blur-md px-2 py-1 rounded-bl-lg text-[8px] sm:text-[10px] font-bold text-white uppercase tracking-widest shadow-md">
+          {anime.format}
+        </div>
+      </div>
 
       {/* Image Container */}
       <div className={`relative w-full aspect-[2/3] overflow-hidden bg-zinc-200 dark:bg-zinc-800 ${isLoading ? "animate-pulse" : ""}`}>
@@ -52,22 +59,12 @@ const AnimeCard = ({ anime, icon, index }) => {
       </div>
 
       {/* Content */}
-      <div className="absolute bottom-0 left-0 w-full p-2 sm:p-3 bg-gradient-to-t from-black/90 to-transparent pt-8 text-[11px] sm:text-sm">
+      <div className="absolute bottom-0 left-0 w-full p-2 sm:p-3 bg-gradient-to-t from-black/90 to-transparent pt-10">
         <h3
-          className="font-bold line-clamp-2 leading-tight transition-colors text-[#ffffff] group-hover:text-[var(--anime-color)]"
+          className="font-bold line-clamp-2 leading-tight transition-colors text-white group-hover:text-[var(--anime-color)] text-[10px] xs:text-xs sm:text-sm md:text-base"
         >
           {anime.title.romaji || anime.title.english}
         </h3>
-
-        <div className="flex items-center justify-between mt-1 text-gray-300">
-          <div className="flex items-center gap-1">
-            {icon}
-            <span className="font-medium">{anime.popularity || anime.meanScore / 10}</span>
-          </div>
-          <span className="bg-white/10 px-1 py-0.5 rounded text-[9px] backdrop-blur-md">
-            {anime.format}
-          </span>
-        </div>
       </div>
     </Link>
   );

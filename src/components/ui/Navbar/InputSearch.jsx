@@ -3,7 +3,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { RiSearchLine, RiCloseLine } from "react-icons/ri";
-import { PiStarFill } from "react-icons/pi";
 import Image from "next/image";
 import { fetchData } from "@/utils/services/api";
 
@@ -198,12 +197,6 @@ const InputSearch = () => {
                       <span className="text-[10px] px-1.5 py-0.5 bg-zinc-100 dark:bg-zinc-800 text-zinc-500 rounded uppercase font-bold">
                         {anime.format}
                       </span>
-                      {anime.meanScore && (
-                        <div className="flex items-center gap-1 text-[10px] text-yellow-500 font-bold">
-                          <PiStarFill size={10} />
-                          {anime.meanScore / 10}
-                        </div>
-                      )}
                     </div>
                   </div>
                 </button>

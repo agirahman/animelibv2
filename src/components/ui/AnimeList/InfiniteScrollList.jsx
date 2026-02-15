@@ -10,7 +10,6 @@ const InfiniteScrollList = ({
     initialPageInfo,
     fetchAction,
     actionParams = [],
-    icon,
     startIndex = 20
 }) => {
     const [animeList, setAnimeList] = useState(initialData);
@@ -64,7 +63,6 @@ const InfiniteScrollList = ({
                     <AnimeCard
                         key={`${anime.id}-${index}`}
                         anime={anime}
-                        icon={icon}
                         index={startIndex + index}
                     />
                 ))}
